@@ -40,6 +40,13 @@ public void main() {
     }
     System.out.println("Saliendo...");
     scanner.close();
-    
-    
 }
+
+    private static int buscarDato(String buscardato) {
+        for (int i = 0; i < datos.size(); i++) {
+            if (datos.get(i).getClave().equals(buscardato)) {
+                return i;
+            }
+        }
+        return -1;
+    }

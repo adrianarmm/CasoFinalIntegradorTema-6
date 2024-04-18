@@ -19,4 +19,7 @@ public class Pareja<T, U> {
     public String toString() {
         return "Clave: " + clave + ", Valor: " + valor;
     }
+
+
+
 }
