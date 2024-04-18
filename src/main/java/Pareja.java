@@ -1,46 +1,22 @@
-import java.util.Objects;
+public class Pareja<T, U> {
+    private T clave;
+    private U valor;
 
-public class Pareja<S, D extends Number> implements Comparable<Pareja<S, Number>> {
-    private Comparable primero;
-    private Comparable segundo;
-
-    public Pareja(Comparable primero, Comparable segundo) {
-        this.primero = primero;
-        this.segundo = segundo;
+    public Pareja(T clave, U valor) {
+        this.clave = clave;
+        this.valor = valor;
     }
 
-    public Comparable getPrimero() {
-        return primero;
+    public T getClave() {
+        return clave;
     }
 
-    public Comparable getSegundo() {
-        return segundo;
-    }
-
-    @Override
-    public int compareTo(Pareja<S, Number> o) {
-        int cmp = this.primero.compareTo(o.primero);
-        if (cmp == 0) {
-            cmp = this.segundo.compareTo(o.segundo);
-        }
-        return cmp;
+    public U getValor() {
+        return valor;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Pareja)) return false;
-        Pareja<S, Number> pareja = (Pareja<S, Number>) o;
-        return Objects.equals(getPrimero(), pareja.getPrimero()) &&
-                Objects.equals(getSegundo(), pareja.getSegundo());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getPrimero(), getSegundo());
-    }
-
-    public double getValor() {
-        return ((Number) this.primero).doubleValue() + ((Number) this.segundo).doubleValue();
+    public String toString() {
+        return "Clave: " + clave + ", Valor: " + valor;
     }
 }
