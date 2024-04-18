@@ -1,3 +1,5 @@
+
+import java.util.Scanner;
 private static void GestionDatosDinamicos() {
     System.out.println("1. Agregar Dato");
     System.out.println("2. Modificar Dato");
