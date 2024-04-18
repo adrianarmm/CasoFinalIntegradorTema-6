@@ -39,4 +39,8 @@ public class Pareja<S, D extends Number> implements Comparable<Pareja<S, Number>
     public int hashCode() {
         return Objects.hash(getPrimero(), getSegundo());
     }
+
+    public double getValor() {
+        return ((Number) this.primero).doubleValue() + ((Number) this.segundo).doubleValue();
+    }
 }

@@ -47,4 +47,62 @@ public class GestionDatosDinamicos {
     }
 
     // Métodos para agregar, modificar, eliminar, mostrar y filtrar datos
+
+    private static void agregarDato() {
+        System.out.print("Introduce el nombre: ");
+        String nombre = scanner.nextLine();
+        System.out.print("Introduce el valor: ");
+        double valor = scanner.nextDouble();
+        scanner.nextLine(); // Consumir salto de línea
+        datos.add(new Pareja<>(nombre, valor));
+    }
+
+    private static void modificarDato() {
+        System.out.print("Introduce el nombre del dato a modificar: ");
+        String nombre = scanner.nextLine();
+        int indice = buscarDato(nombre);
+        if (indice != -1) {
+            System.out.print("Introduce el nuevo valor: ");
+            double valor = scanner.nextDouble();
+            scanner.nextLine(); // Consumir salto de línea
+            datos.set(indice, new Pareja<>(nombre, valor));
+        } else {
+            System.out.println("El dato no existe.");
+        }
+    }
+
+    private static int buscarDato(String buscardato) {
+        return 0;
+    }
+
+    private static void eliminarDato() {
+        System.out.print("Introduce el nombre del dato a eliminar: ");
+        String nombre = scanner.nextLine();
+        int indice = buscarDato(nombre);
+        if (indice != -1) {
+            datos.remove(indice);
+        } else {
+            System.out.println("El dato no existe.");
+        }
+    }
+
+    private static void mostrarDatos() {
+        System.out.println("Datos:");
+        for (Pareja<String, Double> dato : datos) {
+            System.out.println(dato);
+        }
+    }
+
+    private static void filtrarDatos() {
+        System.out.print("Introduce el valor mínimo: ");
+        double valorMinimo = scanner.nextDouble();
+        scanner.nextLine(); // Consumir salto de línea
+        System.out.println("Datos con valor mayor o igual a " + valorMinimo + ":");
+        for (Pareja<String, Double> dato : datos) {
+            if (dato.getValor() >= valorMinimo) {
+                System.out.println(dato);
+            }
+        }
+    }
+
 }
