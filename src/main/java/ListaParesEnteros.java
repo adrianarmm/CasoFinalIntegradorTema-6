@@ -1,4 +1,4 @@
-public class ListaParesEnteros extends Lista<Pareja<Integer>> {
+public class ListaParesEnteros extends Lista<Pareja<S, Number>> {
     public ListaParesEnteros() {
         super();
     }
@@ -9,7 +9,7 @@ public class ListaParesEnteros extends Lista<Pareja<Integer>> {
 
     public int minPrimero() {
         int min = Integer.MAX_VALUE;
-        for (Pareja<Integer> pareja : this.getLista()) {
+        for (Pareja<S, Number> pareja : this.getLista()) {
             min = Math.min(min, pareja.getPrimero());
         }
         return min;

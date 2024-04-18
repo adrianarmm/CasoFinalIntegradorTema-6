@@ -1,24 +1,24 @@
 import java.util.Objects;
 
-public class Pareja<T extends Comparable<T>> implements Comparable<Pareja<T>> {
-    private T primero;
-    private T segundo;
+public class Pareja<S, D extends Number> implements Comparable<Pareja<S, Number>> {
+    private Comparable primero;
+    private Comparable segundo;
 
-    public Pareja(T primero, T segundo) {
+    public Pareja(Comparable primero, Comparable segundo) {
         this.primero = primero;
         this.segundo = segundo;
     }
 
-    public T getPrimero() {
+    public Comparable getPrimero() {
         return primero;
     }
 
-    public T getSegundo() {
+    public Comparable getSegundo() {
         return segundo;
     }
 
     @Override
-    public int compareTo(Pareja<T> o) {
+    public int compareTo(Pareja<S, Number> o) {
         int cmp = this.primero.compareTo(o.primero);
         if (cmp == 0) {
             cmp = this.segundo.compareTo(o.segundo);
@@ -30,7 +30,7 @@ public class Pareja<T extends Comparable<T>> implements Comparable<Pareja<T>> {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Pareja)) return false;
-        Pareja<? extends T> pareja = (Pareja<? extends T>) o;
+        Pareja<S, Number> pareja = (Pareja<S, Number>) o;
         return Objects.equals(getPrimero(), pareja.getPrimero()) &&
                 Objects.equals(getSegundo(), pareja.getSegundo());
     }
