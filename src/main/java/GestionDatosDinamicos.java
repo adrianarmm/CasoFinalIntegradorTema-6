@@ -169,29 +169,28 @@ public class GestionDatosDinamicos {
 
             switch (opcion) {
                 case 1:
-                    // agregarVenta();
-
+                       agregarVenta();
                     break;
                 case 2:
-                    // modificarVenta();
+                    modificarVenta();
                     break;
                 case 3:
-                    // eliminarVenta();
+                    eliminarVenta();
                     break;
                 case 4:
-                    // mostrarVentas();
+                    mostrarVentas();
                     break;
                 case 5:
-                    // filtrarVentasPorCantidad();
+                    filtrarVentasPorCantidad();
                     break;
                 case 6:
-                    // agregarNombre();
+                   agregarNombre();
                     break;
                 case 7:
-                    // mostrarNombresOrdenados();
+                    mostrarNombresOrdenados();
                     break;
                 case 8:
-                    // filtrarVentasPorCantidadMinima();
+                    filtrarVentasPorCantidadMinima();
                     break;
                 case 9:
                     asociarNumeroConLetra();
@@ -211,7 +210,7 @@ public class GestionDatosDinamicos {
                     indexarArchivo(ruta);
                     break;
                 case 14:
-                    // mostrarArchivosIndexadosOrdenados();
+                   mostrarArchivosIndexadosOrdenados();
                     break;
                 case 0:
                     System.out.println("Saliendo...");
