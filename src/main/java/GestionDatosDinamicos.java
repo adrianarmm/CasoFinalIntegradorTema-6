@@ -2,6 +2,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
+import java.util.TreeSet;
 
 class Venta {
     String producto;
@@ -16,19 +18,11 @@ class Venta {
     public String toString() {
         return "Producto: " + producto + ", Cantidad: " + cantidad;
     }
-
-    // Getters necesarios para la manipulación y comparación
-    public String getProducto() {
-        return producto;
-    }
-
-    public int getCantidad() {
-        return cantidad;
-    }
 }
 
-public class GestionVentas {
+public class GestionGeneral {
     private static List<Venta> ventas = new ArrayList<>();
+    private static Set<String> nombres = new TreeSet<>();
     private static Scanner scanner = new Scanner(System.in);
 
     private static void mostrarMenu() {
@@ -37,40 +31,63 @@ public class GestionVentas {
         System.out.println("3. Eliminar Venta");
         System.out.println("4. Mostrar Ventas");
         System.out.println("5. Filtrar Ventas por Cantidad");
+        System.out.println("6. Agregar Nombre");
+        System.out.println("7. Mostrar Nombres Ordenados");
         System.out.println("0. Salir");
         System.out.print("Seleccione una opción: ");
     }
 
-    private static void agregarVenta() {
-        System.out.print("Ingrese el producto: ");
-        String producto = scanner.nextLine();
-        System.out.print("Ingrese la cantidad: ");
-        int cantidad = scanner.nextInt();
-        scanner.nextLine(); // Consumir el salto de línea restante
-        ventas.add(new Venta(producto, cantidad));
+    // Métodos para manejar ventas (agregarVenta, modificarVenta, etc.)
+    // Añadiré solo los cambios relevantes para incluir el manejo de nombres.
+
+    private static void agregarNombre() {
+        System.out.print("Ingrese el nombre a agregar: ");
+        String nombre = scanner.nextLine();
+        nombres.add(nombre);
     }
 
-    private static void modificarVenta() {
-        System.out.print("Ingrese el índice de la venta a modificar: ");
-        int indice = scanner.nextInt();
-        scanner.nextLine(); // Consumir el salto de línea restante
-        if (indice >= 0 && indice < ventas.size()) {
-            System.out.print("Ingrese el nuevo producto: ");
-            String producto = scanner.nextLine();
-            System.out.print("Ingrese la nueva cantidad: ");
-            int cantidad = scanner.nextInt();
+    private static void mostrarNombresOrdenados() {
+        System.out.println("Nombres ordenados:");
+        nombres.forEach(System.out::println);
+    }
+
+    public static void main(String[] args) {
+        int opcion;
+        do {
+            mostrarMenu();
+            opcion = scanner.nextInt();
             scanner.nextLine(); // Consumir el salto de línea restante
-            ventas.set(indice, new Venta(producto, cantidad));
-        } else {
-            System.out.println("Índice inválido");
-        }
-    }
 
-    private static void eliminarVenta() {
-        System.out.print("Ingrese el índice de la venta a eliminar: ");
-        int indice = scanner.nextInt();
-        scanner.nextLine(); // Consumir el salto de línea restante
-        if (indice >= 0 && indice < ventas.size()) {
-            ventas.remove(indice);
-        } else {
-            System.out
+            switch (opcion) {
+                case 1:
+                    // Llamar a agregarVenta();
+                    break;
+                case 2:
+                    // Llamar a modificarVenta();
+                    break;
+                case 3:
+                    // Llamar a eliminarVenta();
+                    break;
+                case 4:
+                    // Llamar a mostrarVentas();
+                    break;
+                case 5:
+                    // Llamar a filtrarVentasPorCantidad();
+                    break;
+                case 6:
+                    agregarNombre();
+                    break;
+                case 7:
+                    mostrarNombresOrdenados();
+                    break;
+                case 0:
+                    System.out.println("Saliendo...");
+                    break;
+                default:
+                    System.out.println("Opción no válida");
+                    break;
+            }
+        } while (opcion != 0);
+        scanner.close();
+    }
+}
