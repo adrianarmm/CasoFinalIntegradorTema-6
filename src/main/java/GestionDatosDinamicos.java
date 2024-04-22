@@ -53,14 +53,13 @@ public class GestionDatosDinamicos {
         System.out.print("Seleccione una opción: ");
     }
 
-    // Implementaciones para manejar ventas y nombres
-
     private static void asociarNumeroConLetra() {
         System.out.print("Ingrese un número: ");
         int numero = scanner.nextInt();
         System.out.print("Ingrese una letra: ");
         char letra = scanner.next().charAt(0);
         numerosLetras.put(numero, letra);
+
     }
 
     private static void mostrarAsociacionNumeroLetra() {
@@ -116,7 +115,6 @@ public class GestionDatosDinamicos {
     private static void mostrarVentas() {
         ventas.forEach(System.out::println);
     }
-
     private static void filtrarVentasPorCantidad() {
         System.out.print("Ingrese la cantidad mínima: ");
         int cantidadMinima = scanner.nextInt();
@@ -133,8 +131,24 @@ public class GestionDatosDinamicos {
     }
 
     private static void mostrarNombresOrdenados() {
-        nombres.forEach(System.out::println);
+        if (nombres.isEmpty()) {
+            System.out.println("No hay nombres para mostrar.");
+            return;
+        }
+
+        System.out.println("Nombres ordenados:");
+        System.out.println("==================");
+
+        int contador = 1;
+        for (String nombre : nombres) {
+            System.out.println(contador + ". " + nombre);
+            contador++;
+        }
+
+        System.out.println("==================");
+        System.out.println("Total de nombres: " + nombres.size());
     }
+
 
     private static void filtrarVentasPorCantidadMinima() {
         System.out.print("Ingrese la cantidad mínima: ");
