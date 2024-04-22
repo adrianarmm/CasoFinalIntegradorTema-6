@@ -1,4 +1,4 @@
-public class Archivo implements Comparable<Archivo> {
+public class Archivo implements Comparable<ArchivoS> {
     private String nombre;
     private String ruta;
 
@@ -16,7 +16,7 @@ public class Archivo implements Comparable<Archivo> {
     }
 
     @Override
-    public int compareTo(Archivo o) {
+    public int compareTo(ArchivoS o) {
         return this.nombre.compareTo(o.getNombre());
     }
 

@@ -32,7 +32,7 @@ public class GestionDatosDinamicos {
     private static Map<Integer, String> numerosTexto = new HashMap<>();
     private static Scanner scanner = new Scanner(System.in);
 
-    private static List<Archivo> archivosIndexados = new ArrayList<>();
+    private static List<ArchivoS> archivosIndexados = new ArrayList<>();
 
     private static void mostrarMenu() {
         System.out.println("\n1. Agregar Venta");
@@ -81,7 +81,7 @@ public class GestionDatosDinamicos {
     }
 
     private static void agregarVenta() {
-        System.out.print("Ingrese el nombre del producto: ");[INST] String producto = scanner.nextLine();
+        System.out.print("Ingrese el nombre del producto: "); String producto = scanner.nextLine();
         System.out.print("Ingrese la cantidad: ");
         int cantidad = scanner.nextInt();
         ventas.add(new Venta(producto, cantidad));
@@ -151,7 +151,7 @@ public class GestionDatosDinamicos {
         if (archivosEnDirectorio != null) {
             for (File archivo : archivosEnDirectorio) {
                 if (archivo.isFile()) {
-                    archivosIndexados.add(new Archivo(archivo.getName(), archivo.getAbsolutePath()));
+                    archivosIndexados.add(new ArchivoS(archivo.getName(), archivo.getAbsolutePath()));
                 } else if (archivo.isDirectory()) {
                     indexarArchivo(archivo.getAbsolutePath()); // Llamada recursiva para subdirectorios
                 }
@@ -161,7 +161,7 @@ public class GestionDatosDinamicos {
 
     private static void mostrarArchivosIndexadosOrdenados() {
         Collections.sort(archivosIndexados);
-        for (Archivo archivo : archivosIndexados) {
+        for (ArchivoS archivo : archivosIndexados) {
             System.out.println(archivo);
         }
     }
@@ -230,11 +230,11 @@ public class GestionDatosDinamicos {
     }
 }
 
-class Archivo implements Comparable<Archivo> {
+class ArchivoS implements Comparable<ArchivoS> {
     private final String nombre;
     private final String ruta;
 
-    public Archivo(String nombre, String ruta) {
+    public ArchivoS(String nombre, String ruta) {
         this.nombre = nombre;
         this.ruta = ruta;
     }
@@ -245,7 +245,7 @@ class Archivo implements Comparable<Archivo> {
     }
 
     @Override
-    public int compareTo(Archivo otroArchivo) {
+    public int compareTo(ArchivoS otroArchivo) {
         return this.nombre.compareTo(otroArchivo.nombre);
     }
 }
