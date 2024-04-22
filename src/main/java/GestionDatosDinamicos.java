@@ -190,11 +190,17 @@ public class GestionDatosDinamicos {
     }
 
     private static void mostrarArchivosIndexadosOrdenados() {
-        Collections.sort(archivosIndexados);
-        for (archivo archivo : archivosIndexados) {
-            System.out.println(archivo);
+        if (archivosIndexados.isEmpty()) {
+            System.out.println("No hay archivos indexados para mostrar.");
+        } else {
+            Collections.sort(archivosIndexados);
+            System.out.println("Archivos indexados ordenados:");
+            for (archivo archivo : archivosIndexados) {
+                System.out.println(archivo);
+            }
         }
     }
+
 
     public static void main(String[] args) {
         int opcion;
@@ -265,6 +271,7 @@ class archivo implements Comparable<archivo> {
     private final String ruta;
 
     public archivo(String nombre, String ruta) {
+        super();
         this.nombre = nombre;
         this.ruta = ruta;
     }

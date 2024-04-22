@@ -1,27 +1,19 @@
-public class Archivo implements Comparable<archivo> {
-    private String nombre;
-    private String ruta;
+class Archivo implements Comparable<Archivo> {
+    private final String nombre;
+    private final String ruta;
 
     public Archivo(String nombre, String ruta) {
         this.nombre = nombre;
         this.ruta = ruta;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public String getRuta() {
-        return ruta;
-    }
-
-    @Override
-    public int compareTo(archivo o) {
-        return this.nombre.compareTo(o.getNombre());
-    }
-
     @Override
     public String toString() {
-        return nombre + " - " + ruta;
+        return "Nombre: " + nombre + ", Ruta: " + ruta;
+    }
+
+    @Override
+    public int compareTo(Archivo otroArchivo) {
+        return this.nombre.compareTo(otroArchivo.nombre);
     }
 }
