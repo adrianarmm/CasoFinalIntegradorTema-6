@@ -1,11 +1,13 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.List;
 
 public class GestionDatosDinamicos {
 
-    private static List<Dato> datos; // Assuming Dato is a class you have defined
+    private static List<Dato> datos = new ArrayList<>(); // Inicialización de la lista
+    private static Scanner scanner = new Scanner(System.in); // Scanner como variable estática para reutilización
 
-    private static void gestionDatosDinamicos() {
+    private static void mostrarMenu() {
         System.out.println("1. Agregar Dato");
         System.out.println("2. Modificar Dato");
         System.out.println("3. Eliminar Dato");
@@ -16,36 +18,47 @@ public class GestionDatosDinamicos {
     }
 
     public static void main(String[] args) {
-        gestionDatosDinamicos();
-        Scanner scanner = new Scanner(System.in);
-        int opcion = scanner.nextInt();
-        while (opcion != 0) {
+        int opcion;
+        do {
+            mostrarMenu();
+            opcion = scanner.nextInt();
+            scanner.nextLine(); // Consumir el salto de línea restante
+
             switch (opcion) {
                 case 1:
-                    System.out.println("Agregar Dato");
+                    agregarDato();
                     break;
                 case 2:
-                    System.out.println("Modificar Dato");
+                    modificarDato();
                     break;
                 case 3:
-                    System.out.println("Eliminar Dato");
+                    eliminarDato();
                     break;
                 case 4:
-                    System.out.println("Mostrar Datos");
+                    mostrarDatos();
                     break;
                 case 5:
-                    System.out.println("Filtrar Datos");
+                    filtrarDatos();
                     break;
                 default:
                     System.out.println("Opción no válida");
                     break;
             }
-            gestionDatosDinamicos();
-            opcion = scanner.nextInt();
-        }
+        } while (opcion != 0);
         System.out.println("Saliendo...");
         scanner.close();
     }
+
+    // Métodos de operación (dejaré estos como ejemplos para que los completes)
+    private static void agregarDato() {
+        // Implementación para agregar un Dato
+    }
+
+    private static void modificarDato() {
+        // Implementación para modificar un Dato
+    }
+
+    // Otros métodos como eliminarDato(), mostrarDatos(), filtrarDatos()
 
     private static int buscarDato(String buscardato) {
         for (int i = 0; i < datos.size(); i++) {
