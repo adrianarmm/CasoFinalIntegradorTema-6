@@ -3,8 +3,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 class Venta {
-    String producto;
-    int cantidad;
+    private final String producto;
+    private final int cantidad;
 
     public Venta(String producto, int cantidad) {
         this.producto = producto;
@@ -14,6 +14,14 @@ class Venta {
     @Override
     public String toString() {
         return "Producto: " + producto + ", Cantidad: " + cantidad;
+    }
+
+    public String getProducto() {
+        return producto;
+    }
+
+    public int getCantidad() {
+        return cantidad;
     }
 }
 
@@ -73,8 +81,7 @@ public class GestionDatosDinamicos {
     }
 
     private static void agregarVenta() {
-        System.out.print("Ingrese el nombre del producto: ");
-        String producto = scanner.nextLine();
+        System.out.print("Ingrese el nombre del producto: ");[INST] String producto = scanner.nextLine();
         System.out.print("Ingrese la cantidad: ");
         int cantidad = scanner.nextInt();
         ventas.add(new Venta(producto, cantidad));
@@ -114,7 +121,7 @@ public class GestionDatosDinamicos {
         System.out.print("Ingrese la cantidad mínima: ");
         int cantidadMinima = scanner.nextInt();
         List<Venta> ventasFiltradas = ventas.stream()
-                .filter(venta -> venta.cantidad >= cantidadMinima)
+                .filter(venta -> venta.getCantidad() >= cantidadMinima)
                 .collect(Collectors.toList());
         ventasFiltradas.forEach(System.out::println);
     }
@@ -133,7 +140,7 @@ public class GestionDatosDinamicos {
         System.out.print("Ingrese la cantidad mínima: ");
         int cantidadMinima = scanner.nextInt();
         List<Venta> ventasFiltradas = ventas.stream()
-                .filter(venta -> venta.cantidad >= cantidadMinima)
+                .filter(venta -> venta.getCantidad() >= cantidadMinima)
                 .collect(Collectors.toList());
         ventasFiltradas.forEach(System.out::println);
     }
@@ -159,7 +166,6 @@ public class GestionDatosDinamicos {
         }
     }
 
-
     public static void main(String[] args) {
         int opcion;
         do {
@@ -169,7 +175,7 @@ public class GestionDatosDinamicos {
 
             switch (opcion) {
                 case 1:
-                       agregarVenta();
+                    agregarVenta();
                     break;
                 case 2:
                     modificarVenta();
@@ -184,7 +190,7 @@ public class GestionDatosDinamicos {
                     filtrarVentasPorCantidad();
                     break;
                 case 6:
-                   agregarNombre();
+                    agregarNombre();
                     break;
                 case 7:
                     mostrarNombresOrdenados();
@@ -210,7 +216,7 @@ public class GestionDatosDinamicos {
                     indexarArchivo(ruta);
                     break;
                 case 14:
-                   mostrarArchivosIndexadosOrdenados();
+                    mostrarArchivosIndexadosOrdenados();
                     break;
                 case 0:
                     System.out.println("Saliendo...");
@@ -221,5 +227,25 @@ public class GestionDatosDinamicos {
             }
         } while (opcion != 0);
         scanner.close();
+    }
+}
+
+class Archivo implements Comparable<Archivo> {
+    private final String nombre;
+    private final String ruta;
+
+    public Archivo(String nombre, String ruta) {
+        this.nombre = nombre;
+        this.ruta = ruta;
+    }
+
+    @Override
+    public String toString() {
+        return "Nombre: " + nombre + ", Ruta: " + ruta;
+    }
+
+    @Override
+    public int compareTo(Archivo otroArchivo) {
+        return this.nombre.compareTo(otroArchivo.nombre);
     }
 }
