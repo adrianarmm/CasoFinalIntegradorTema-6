@@ -1,8 +1,8 @@
-public class Archivo implements Comparable<ArchivoS> {
+public class ArchivoS implements Comparable<ArchivoS> {
     private String nombre;
     private String ruta;
 
-    public Archivo(String nombre, String ruta) {
+    public ArchivoS(String nombre, String ruta) {
         this.nombre = nombre;
         this.ruta = ruta;
     }
