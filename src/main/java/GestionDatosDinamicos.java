@@ -152,11 +152,27 @@ public class GestionDatosDinamicos {
 
     private static void filtrarVentasPorCantidadMinima() {
         System.out.print("Ingrese la cantidad mínima: ");
-        int cantidadMinima = scanner.nextInt();
+        int cantidadMinima;
+        try {
+            cantidadMinima = scanner.nextInt();
+        } catch (InputMismatchException e) {
+            System.out.println("Por favor, ingrese un número válido.");
+            scanner.next(); // Limpiar el buffer del scanner.
+            return;
+        } finally {
+            scanner.nextLine(); // Asegurarse de consumir el salto de línea después de leer el número.
+        }
+
         List<Venta> ventasFiltradas = ventas.stream()
                 .filter(venta -> venta.getCantidad() >= cantidadMinima)
                 .collect(Collectors.toList());
-        ventasFiltradas.forEach(System.out::println);
+
+        if (ventasFiltradas.isEmpty()) {
+            System.out.println("No hay ventas que cumplan el criterio.");
+        } else {
+            System.out.println("Ventas con cantidad mayor a " + cantidadMinima + ":");
+            ventasFiltradas.forEach(System.out::println);
+        }
     }
 
     private static void indexarArchivo(String rutaDirectorio) {
