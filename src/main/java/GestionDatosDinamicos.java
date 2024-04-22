@@ -1,10 +1,5 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.Set;
-import java.util.TreeSet;
+import java.io.File;
+import java.util.*;
 import java.util.stream.Collectors;
 
 class Venta {
@@ -143,12 +138,25 @@ public class GestionDatosDinamicos {
         ventasFiltradas.forEach(System.out::println);
     }
 
-    private static void indexarArchivo() {
-        System.out.print("Ingrese el nombre del archivo: ");
-        String nombre = scanner.nextLine();
-        System.out.print("Ingrese la ruta del archivo: ");
-        String ruta = scanner.nextLine();
-        archivosIndexados.add(new Archivo(nombre, ruta));
+    private static void indexarArchivo(String rutaDirectorio) {
+        File directorio = new File(rutaDirectorio);
+        File[] archivosEnDirectorio = directorio.listFiles();
+        if (archivosEnDirectorio != null) {
+            for (File archivo : archivosEnDirectorio) {
+                if (archivo.isFile()) {
+                    archivosIndexados.add(new Archivo(archivo.getName(), archivo.getAbsolutePath()));
+                } else if (archivo.isDirectory()) {
+                    indexarArchivo(archivo.getAbsolutePath()); // Llamada recursiva para subdirectorios
+                }
+            }
+        }
+    }
+
+    private static void mostrarArchivosIndexadosOrdenados() {
+        Collections.sort(archivosIndexados);
+        for (Archivo archivo : archivosIndexados) {
+            System.out.println(archivo);
+        }
     }
 
 
