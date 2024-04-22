@@ -29,6 +29,8 @@ public class GestionDatosDinamicos {
     private static Map<Integer, String> numerosTexto = new HashMap<>();
     private static Scanner scanner = new Scanner(System.in);
 
+    private static List<Archivo> archivosIndexados = new ArrayList<>();
+
     private static void mostrarMenu() {
         System.out.println("\n1. Agregar Venta");
         System.out.println("2. Modificar Venta");
@@ -42,6 +44,8 @@ public class GestionDatosDinamicos {
         System.out.println("10. Mostrar Asociación Número-Letra");
         System.out.println("11. Asociar Número con su Representación Textual");
         System.out.println("12. Mostrar Asociación Número-Texto");
+        System.out.println("13. Indexar Archivo");
+        System.out.println("14. Mostrar Archivos Indexados Ordenados");
         System.out.println("0. Salir");
         System.out.print("Seleccione una opción: ");
     }
@@ -73,6 +77,81 @@ public class GestionDatosDinamicos {
         numerosTexto.forEach((numero, texto) -> System.out.println("Número: " + numero + " - Texto: " + texto));
     }
 
+    private static void agregarVenta() {
+        System.out.print("Ingrese el nombre del producto: ");
+        String producto = scanner.nextLine();
+        System.out.print("Ingrese la cantidad: ");
+        int cantidad = scanner.nextInt();
+        ventas.add(new Venta(producto, cantidad));
+    }
+
+    private static void modificarVenta() {
+        System.out.print("Ingrese el índice de la venta a modificar: ");
+        int indice = scanner.nextInt();
+        scanner.nextLine(); // Consumir el salto de línea restante
+
+        if (indice >= 0 && indice < ventas.size()) {
+            System.out.print("Ingrese el nuevo nombre del producto: ");
+            String producto = scanner.nextLine();
+            System.out.print("Ingrese la nueva cantidad: ");
+            int cantidad = scanner.nextInt();
+            ventas.set(indice, new Venta(producto, cantidad));
+        } else {
+            System.out.println("El índice proporcionado no es válido.");
+        }
+    }
+
+    private static void eliminarVenta() {
+        System.out.print("Ingrese el índice de la venta a eliminar: ");
+        int indice = scanner.nextInt();
+        if (indice >= 0 && indice < ventas.size()) {
+            ventas.remove(indice);
+        } else {
+            System.out.println("El índice proporcionado no es válido.");
+        }
+    }
+
+    private static void mostrarVentas() {
+        ventas.forEach(System.out::println);
+    }
+
+    private static void filtrarVentasPorCantidad() {
+        System.out.print("Ingrese la cantidad mínima: ");
+        int cantidadMinima = scanner.nextInt();
+        List<Venta> ventasFiltradas = ventas.stream()
+                .filter(venta -> venta.cantidad >= cantidadMinima)
+                .collect(Collectors.toList());
+        ventasFiltradas.forEach(System.out::println);
+    }
+
+    private static void agregarNombre() {
+        System.out.print("Ingrese un nombre: ");
+        String nombre = scanner.nextLine();
+        nombres.add(nombre);
+    }
+
+    private static void mostrarNombresOrdenados() {
+        nombres.forEach(System.out::println);
+    }
+
+    private static void filtrarVentasPorCantidadMinima() {
+        System.out.print("Ingrese la cantidad mínima: ");
+        int cantidadMinima = scanner.nextInt();
+        List<Venta> ventasFiltradas = ventas.stream()
+                .filter(venta -> venta.cantidad >= cantidadMinima)
+                .collect(Collectors.toList());
+        ventasFiltradas.forEach(System.out::println);
+    }
+
+    private static void indexarArchivo() {
+        System.out.print("Ingrese el nombre del archivo: ");
+        String nombre = scanner.nextLine();
+        System.out.print("Ingrese la ruta del archivo: ");
+        String ruta = scanner.nextLine();
+        archivosIndexados.add(new Archivo(nombre, ruta));
+    }
+
+
     public static void main(String[] args) {
         int opcion;
         do {
@@ -83,6 +162,7 @@ public class GestionDatosDinamicos {
             switch (opcion) {
                 case 1:
                     // agregarVenta();
+
                     break;
                 case 2:
                     // modificarVenta();
@@ -116,6 +196,14 @@ public class GestionDatosDinamicos {
                     break;
                 case 12:
                     mostrarAsociacionNumeroTexto();
+                    break;
+                case 13:
+                    System.out.print("Ingrese la ruta del directorio a indexar: ");
+                    String ruta = scanner.nextLine();
+                    indexarArchivo(ruta);
+                    break;
+                case 14:
+                    // mostrarArchivosIndexadosOrdenados();
                     break;
                 case 0:
                     System.out.println("Saliendo...");
