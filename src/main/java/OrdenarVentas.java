@@ -2,11 +2,11 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-class Venta {
+class venta {
     String producto;
     int cantidad;
 
-    public Venta(String producto, int cantidad) {
+    public venta(String producto, int cantidad) {
         this.producto = producto;
         this.cantidad = cantidad;
     }
@@ -19,10 +19,10 @@ class Venta {
 
 public class OrdenarVentas {
     public static void main(String[] args) {
-        List<Venta> ventas = new ArrayList<>();
-        ventas.add(new Venta("Manzanas", 50));
-        ventas.add(new Venta("Bananas", 20));
-        ventas.add(new Venta("Naranjas", 70));
+        List<venta> ventas = new ArrayList<>();
+        ventas.add(new venta("Manzanas", 50));
+        ventas.add(new venta("Bananas", 20));
+        ventas.add(new venta("Naranjas", 70));
 
         // Ordenar por cantidad
         ventas.sort(Comparator.comparingInt(v -> v.cantidad));
