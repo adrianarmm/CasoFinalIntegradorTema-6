@@ -32,7 +32,7 @@ public class GestionDatosDinamicos {
     private static Map<Integer, String> numerosTexto = new HashMap<>();
     private static Scanner scanner = new Scanner(System.in);
 
-    private static List<Archivo> archivosIndexados = new ArrayList<>();
+    private static List<archivo> archivosIndexados = new ArrayList<>();
 
     private static void mostrarMenu() {
         System.out.println("\n1. Agregar Venta");
@@ -151,7 +151,7 @@ public class GestionDatosDinamicos {
         if (archivosEnDirectorio != null) {
             for (File archivo : archivosEnDirectorio) {
                 if (archivo.isFile()) {
-                    archivosIndexados.add(new Archivo(archivo.getName(), archivo.getAbsolutePath()));
+                    archivosIndexados.add(new archivo(archivo.getName(), archivo.getAbsolutePath()));
                 } else if (archivo.isDirectory()) {
                     indexarArchivo(archivo.getAbsolutePath()); // Llamada recursiva para subdirectorios
                 }
@@ -161,7 +161,7 @@ public class GestionDatosDinamicos {
 
     private static void mostrarArchivosIndexadosOrdenados() {
         Collections.sort(archivosIndexados);
-        for (Archivo archivo : archivosIndexados) {
+        for (archivo archivo : archivosIndexados) {
             System.out.println(archivo);
         }
     }
@@ -230,11 +230,11 @@ public class GestionDatosDinamicos {
     }
 }
 
-class ArchivoS implements Comparable<Archivo> {
+class archivo implements Comparable<archivo> {
     private final String nombre;
     private final String ruta;
 
-    public ArchivoS(String nombre, String ruta) {
+    public archivo(String nombre, String ruta) {
         this.nombre = nombre;
         this.ruta = ruta;
     }
@@ -245,7 +245,11 @@ class ArchivoS implements Comparable<Archivo> {
     }
 
     @Override
-    public int compareTo(Archivo otroArchivo) {
+    public int compareTo(archivo otroArchivo) {
         return this.nombre.compareTo(otroArchivo.nombre);
+    }
+
+    public String getNombre() {
+        return nombre;
     }
 }

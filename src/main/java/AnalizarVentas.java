@@ -11,7 +11,7 @@ public class AnalizarVentas {
 
         int cantidadMinima = 30;
         List<Venta> ventasFiltradas = ventas.stream()
-                .filter(v -> v.cantidad > cantidadMinima)
+                .filter(v -> v.getCantidad() > cantidadMinima)
                 .collect(Collectors.toList());
 
         System.out.println("Ventas con cantidad mayor a " + cantidadMinima + ":");

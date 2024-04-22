@@ -25,12 +25,12 @@ public class OrdenarVentas {
         ventas.add(new Venta("Naranjas", 70));
 
         // Ordenar por cantidad
-        ventas.sort(Comparator.comparingInt(v -> v.cantidad));
+        ventas.sort(Comparator.comparingInt(v -> v.getCantidad()));
         System.out.println("Ordenado por cantidad:");
         ventas.forEach(System.out::println);
 
         // Ordenar por nombre del producto
-        ventas.sort(Comparator.comparing(v -> v.producto));
+        ventas.sort(Comparator.comparing(v -> v.getProducto()));
         System.out.println("\nOrdenado por nombre del producto:");
         ventas.forEach(System.out::println);
     }

@@ -5,7 +5,7 @@ import java.util.List;
 
 public class IndexadorArchivos {
 
-    private List<Archivo> archivos = new ArrayList<>();
+    private List<archivo> archivos = new ArrayList<>();
 
     public void indexarDirectorio(String rutaDirectorio) {
         File directorio = new File(rutaDirectorio);
@@ -13,7 +13,7 @@ public class IndexadorArchivos {
         if (archivosEnDirectorio != null) {
             for (File archivo : archivosEnDirectorio) {
                 if (archivo.isFile()) {
-                    archivos.add(new Archivo(archivo.getName(), archivo.getAbsolutePath()));
+                    archivos.add(new archivo(archivo.getName(), archivo.getAbsolutePath()));
                 } else if (archivo.isDirectory()) {
                     indexarDirectorio(archivo.getAbsolutePath());
                 }
@@ -23,7 +23,7 @@ public class IndexadorArchivos {
 
     public void mostrarArchivosOrdenados() {
         Collections.sort(archivos);
-        for (Archivo archivo : archivos) {
+        for (archivo archivo : archivos) {
             System.out.println(archivo);
         }
     }
