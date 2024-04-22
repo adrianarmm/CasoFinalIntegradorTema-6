@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 class Venta {
     String producto;
@@ -20,7 +21,7 @@ class Venta {
     }
 }
 
-public class GestionGeneral {
+public class GestionDatosDinamicos {
     private static List<Venta> ventas = new ArrayList<>();
     private static Set<String> nombres = new TreeSet<>();
     private static Scanner scanner = new Scanner(System.in);
@@ -33,22 +34,25 @@ public class GestionGeneral {
         System.out.println("5. Filtrar Ventas por Cantidad");
         System.out.println("6. Agregar Nombre");
         System.out.println("7. Mostrar Nombres Ordenados");
+        System.out.println("8. Filtrar Ventas por Cantidad Mínima");
         System.out.println("0. Salir");
         System.out.print("Seleccione una opción: ");
     }
 
-    // Métodos para manejar ventas (agregarVenta, modificarVenta, etc.)
-    // Añadiré solo los cambios relevantes para incluir el manejo de nombres.
+    // Métodos previamente descritos para manejar ventas y nombres.
+    // Por simplicidad, se omiten aquí pero deben ser incluidos en tu implementación.
 
-    private static void agregarNombre() {
-        System.out.print("Ingrese el nombre a agregar: ");
-        String nombre = scanner.nextLine();
-        nombres.add(nombre);
-    }
+    private static void filtrarVentasPorCantidadMinima() {
+        System.out.print("Ingrese la cantidad mínima: ");
+        int cantidadMinima = scanner.nextInt();
+        scanner.nextLine(); // Consumir el salto de línea restante
 
-    private static void mostrarNombresOrdenados() {
-        System.out.println("Nombres ordenados:");
-        nombres.forEach(System.out::println);
+        List<Venta> ventasFiltradas = ventas.stream()
+                .filter(v -> v.cantidad > cantidadMinima)
+                .collect(Collectors.toList());
+
+        System.out.println("Ventas con cantidad mayor a " + cantidadMinima + ":");
+        ventasFiltradas.forEach(System.out::println);
     }
 
     public static void main(String[] args) {
@@ -75,10 +79,13 @@ public class GestionGeneral {
                     // Llamar a filtrarVentasPorCantidad();
                     break;
                 case 6:
-                    agregarNombre();
+                    // Llamar a agregarNombre();
                     break;
                 case 7:
-                    mostrarNombresOrdenados();
+                    // Llamar a mostrarNombresOrdenados();
+                    break;
+                case 8:
+                    filtrarVentasPorCantidadMinima();
                     break;
                 case 0:
                     System.out.println("Saliendo...");
