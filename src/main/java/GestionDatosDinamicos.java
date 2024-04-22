@@ -1,71 +1,76 @@
 import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Scanner;
 
-public class GestionDatosDinamicos {
+class Venta {
+    String producto;
+    int cantidad;
 
-    private static List<Dato> datos = new ArrayList<>(); // Inicialización de la lista
-    private static Scanner scanner = new Scanner(System.in); // Scanner como variable estática para reutilización
+    public Venta(String producto, int cantidad) {
+        this.producto = producto;
+        this.cantidad = cantidad;
+    }
+
+    @Override
+    public String toString() {
+        return "Producto: " + producto + ", Cantidad: " + cantidad;
+    }
+
+    // Getters necesarios para la manipulación y comparación
+    public String getProducto() {
+        return producto;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+}
+
+public class GestionVentas {
+    private static List<Venta> ventas = new ArrayList<>();
+    private static Scanner scanner = new Scanner(System.in);
 
     private static void mostrarMenu() {
-        System.out.println("1. Agregar Dato");
-        System.out.println("2. Modificar Dato");
-        System.out.println("3. Eliminar Dato");
-        System.out.println("4. Mostrar Datos");
-        System.out.println("5. Filtrar Datos");
+        System.out.println("\n1. Agregar Venta");
+        System.out.println("2. Modificar Venta");
+        System.out.println("3. Eliminar Venta");
+        System.out.println("4. Mostrar Ventas");
+        System.out.println("5. Filtrar Ventas por Cantidad");
         System.out.println("0. Salir");
         System.out.print("Seleccione una opción: ");
     }
 
-    public static void main(String[] args) {
-        int opcion;
-        do {
-            mostrarMenu();
-            opcion = scanner.nextInt();
+    private static void agregarVenta() {
+        System.out.print("Ingrese el producto: ");
+        String producto = scanner.nextLine();
+        System.out.print("Ingrese la cantidad: ");
+        int cantidad = scanner.nextInt();
+        scanner.nextLine(); // Consumir el salto de línea restante
+        ventas.add(new Venta(producto, cantidad));
+    }
+
+    private static void modificarVenta() {
+        System.out.print("Ingrese el índice de la venta a modificar: ");
+        int indice = scanner.nextInt();
+        scanner.nextLine(); // Consumir el salto de línea restante
+        if (indice >= 0 && indice < ventas.size()) {
+            System.out.print("Ingrese el nuevo producto: ");
+            String producto = scanner.nextLine();
+            System.out.print("Ingrese la nueva cantidad: ");
+            int cantidad = scanner.nextInt();
             scanner.nextLine(); // Consumir el salto de línea restante
-
-            switch (opcion) {
-                case 1:
-                    agregarDato();
-                    break;
-                case 2:
-                    modificarDato();
-                    break;
-                case 3:
-                    eliminarDato();
-                    break;
-                case 4:
-                    mostrarDatos();
-                    break;
-                case 5:
-                    filtrarDatos();
-                    break;
-                default:
-                    System.out.println("Opción no válida");
-                    break;
-            }
-        } while (opcion != 0);
-        System.out.println("Saliendo...");
-        scanner.close();
-    }
-
-    // Métodos de operación (dejaré estos como ejemplos para que los completes)
-    private static void agregarDato() {
-        // Implementación para agregar un Dato
-    }
-
-    private static void modificarDato() {
-        // Implementación para modificar un Dato
-    }
-
-    // Otros métodos como eliminarDato(), mostrarDatos(), filtrarDatos()
-
-    private static int buscarDato(String buscardato) {
-        for (int i = 0; i < datos.size(); i++) {
-            if (datos.get(i).getClave().equals(buscardato)) {
-                return i;
-            }
+            ventas.set(indice, new Venta(producto, cantidad));
+        } else {
+            System.out.println("Índice inválido");
         }
-        return -1;
     }
-}
+
+    private static void eliminarVenta() {
+        System.out.print("Ingrese el índice de la venta a eliminar: ");
+        int indice = scanner.nextInt();
+        scanner.nextLine(); // Consumir el salto de línea restante
+        if (indice >= 0 && indice < ventas.size()) {
+            ventas.remove(indice);
+        } else {
+            System.out
