@@ -32,7 +32,7 @@ public class GestionDatosDinamicos {
     private static Map<Integer, String> numerosTexto = new HashMap<>();
     private static Scanner scanner = new Scanner(System.in);
 
-    private static List<archivo> archivosIndexados = new ArrayList<>();
+    private static List<Archivo> archivosIndexados = new ArrayList<Archivo>();
 
     private static void mostrarMenu() {
         System.out.println("\n1. Agregar Venta");
@@ -177,21 +177,32 @@ public class GestionDatosDinamicos {
 
     private static void indexarArchivo(String rutaDirectorio) {
         File directorio = new File(rutaDirectorio);
+
+        // Verificar si el directorio existe y se puede leer.
+        if (!directorio.exists() || !directorio.canRead()) {
+            System.out.println("El directorio no existe o no se puede leer: " + rutaDirectorio);
+            return;
+        }
+
         File[] archivosEnDirectorio = directorio.listFiles();
         if (archivosEnDirectorio != null) {
             for (File archivo : archivosEnDirectorio) {
                 if (archivo.isFile()) {
-                    archivosIndexados.add(new archivo(archivo.getName(), archivo.getAbsolutePath()));
+                    // Asegúrate de que la clase se llama Archivo, y está definida para aceptar nombre y ruta
+                    archivosIndexados.add(new Archivo(archivo.getName(), archivo.getAbsolutePath()));
                 } else if (archivo.isDirectory()) {
-                    indexarArchivo(archivo.getAbsolutePath()); // Llamada recursiva para subdirectorios
+                    // Llamada recursiva para subdirectorios
+                    indexarArchivo(archivo.getAbsolutePath());
                 }
             }
+        } else {
+            System.out.println("No se pudieron listar los archivos de: " + rutaDirectorio);
         }
     }
 
     private static void mostrarArchivosIndexadosOrdenados() {
         Collections.sort(archivosIndexados);
-        for (archivo archivo : archivosIndexados) {
+        for (Archivo archivo : archivosIndexados) {
             System.out.println(archivo);
         }
     }
