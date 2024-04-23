@@ -3,14 +3,14 @@ import java.util.stream.Collectors;
 
 public class AnalizarVentas {
     public static void main(String[] args) {
-        List<Venta> ventas = List.of(
-                new Venta("Manzanas", 50),
-                new Venta("Platanos", 20),
-                new Venta("Naranjas", 70)
+        List<Ventas> ventas = List.of(
+                new Ventas("Manzanas", 50),
+                new Ventas("Platanos", 20),
+                new Ventas("Naranjas", 70)
         );
 
         int cantidadMinima = 30;
-        List<Venta> ventasFiltradas = ventas.stream()
+        List<Ventas> ventasFiltradas = ventas.stream()
                 .filter(v -> v.getCantidad() > cantidadMinima)
                 .collect(Collectors.toList());
 
