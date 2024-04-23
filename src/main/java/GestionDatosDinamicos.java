@@ -26,11 +26,11 @@ class Venta {
     }
 }
 
-class Archivo implements Comparable<Archivos> {
+class Archivos implements Comparable<Archivos> {
     private final String nombre;
     private final String ruta;
 
-    public Archivo(String nombre, String ruta) {
+    public Archivos(String nombre, String ruta) {
         this.nombre = nombre;
         this.ruta = ruta;
     }
@@ -55,9 +55,7 @@ public class GestionDatosDinamicos extends JFrame {
     private static Set<String> nombres = new TreeSet<>();
     private static Map<Integer, Character> numerosLetras = new HashMap<>();
     private static Map<Integer, String> numerosTexto = new HashMap<>();
-    private static List<Archivos> archivosIndexados = new ArrayList<>();
-
-    private JTextField productoField, cantidadField, nombreField, rutaField;
+    private static List<Archivos> archivosIndexados = new ArrayList<>();private JTextField productoField, cantidadField, nombreField, rutaField;
 
     public GestionDatosDinamicos() {
         createAndShowGUI();
@@ -66,18 +64,28 @@ public class GestionDatosDinamicos extends JFrame {
     private void createAndShowGUI() {
         setTitle("Gestión de Datos Dinámicos");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setLayout(new GridLayout(0, 1));
 
+        setLayout(new GridBagLayout());
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.insets = new Insets(5, 5, 5, 5);
+
+        // Panel de ventas
         JPanel panelVenta = new JPanel();
-        panelVenta.setLayout(new FlowLayout());
-        add(panelVenta);
+        panelVenta.setLayout(new GridBagLayout());
 
         productoField = new JTextField(10);
         cantidadField = new JTextField(10);
-        panelVenta.add(new JLabel("Producto:"));
-        panelVenta.add(productoField);
-        panelVenta.add(new JLabel("Cantidad:"));
-        panelVenta.add(cantidadField);
+
+        constraints.gridx = 1;
+        constraints.gridy = 0;
+        panelVenta.add(new JLabel("Producto:"), constraints);
+        constraints.gridx = 2;
+        panelVenta.add(productoField, constraints);
+        constraints.gridx = 1;
+        constraints.gridy = 1;
+        panelVenta.add(new JLabel("Cantidad:"), constraints);
+        constraints.gridx = 2;
+        panelVenta.add(cantidadField, constraints);
 
         JButton agregarVentaButton = new JButton("Agregar Venta");
         agregarVentaButton.addActionListener(e -> {
@@ -96,21 +104,32 @@ public class GestionDatosDinamicos extends JFrame {
             productoField.setText("");
             cantidadField.setText("");
             JOptionPane.showMessageDialog(this,
-                    "Venta agregada correctamente.",
+                    "Ventaagregada correctamente.",
                     "Éxito",
                     JOptionPane.INFORMATION_MESSAGE);
         });
-        panelVenta.add(agregarVentaButton);
 
-        // Agrega más paneles y botones para otras funcionalidades como modificar y eliminar ventas, manejar nombres y archivos.
+        constraints.gridx = 1;
+        constraints.gridy = 2;
+        panelVenta.add(agregarVentaButton, constraints);
 
-JPanel panelNombre = new JPanel();
-        panelNombre.setLayout(new FlowLayout());
-        add(panelNombre);
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        constraints.gridwidth = 3;
+        constraints.fill = GridBagConstraints.HORIZONTAL;
+        add(panelVenta, constraints);
+
+        // Panel de nombres
+        JPanel panelNombre = new JPanel();
+        panelNombre.setLayout(new GridBagLayout());
 
         nombreField = new JTextField(10);
-        panelNombre.add(new JLabel("Nombre:"));
-        panelNombre.add(nombreField);
+
+        constraints.gridx = 1;
+        constraints.gridy = 0;
+        panelNombre.add(new JLabel("Nombre:"), constraints);
+        constraints.gridx = 2;
+        panelNombre.add(nombreField, constraints);
 
         JButton agregarNombreButton = new JButton("Agregar Nombre");
         agregarNombreButton.addActionListener(e -> {
@@ -123,18 +142,32 @@ JPanel panelNombre = new JPanel();
                     JOptionPane.INFORMATION_MESSAGE);
         });
 
-        panelNombre.add(agregarNombreButton);
+        constraints.gridx = 1;
+        constraints.gridy = 1;
+        panelNombre.add(agregarNombreButton, constraints);
 
+        constraints.gridx = 0;
+        constraints.gridy = 1;
+        constraints.gridwidth = 3;
+        constraints.fill = GridBagConstraints.HORIZONTAL;
+        add(panelNombre, constraints);
+
+        // Panel de números y letras
         JPanel panelNumeroLetra = new JPanel();
-        panelNumeroLetra.setLayout(new FlowLayout());
-        add(panelNumeroLetra);
+        panelNumeroLetra.setLayout(new GridBagLayout());
 
         JTextField numeroField = new JTextField(10);
         JTextField letraField = new JTextField(10);
-        panelNumeroLetra.add(new JLabel("Número:"));
-        panelNumeroLetra.add(numeroField);
-        panelNumeroLetra.add(new JLabel("Letra:"));
-        panelNumeroLetra.add(letraField);
+
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        panelNumeroLetra.add(new JLabel("Número:"), constraints);
+        constraints.gridx = 1;
+        panelNumeroLetra.add(numeroField, constraints);
+        constraints.gridx = 2;
+        panelNumeroLetra.add(new JLabel("Letra:"), constraints);
+        constraints.gridx = 3;
+        panelNumeroLetra.add(letraField, constraints);
 
         JButton agregarNumeroLetraButton = new JButton("Agregar Número-Letra");
         agregarNumeroLetraButton.addActionListener(e -> {
@@ -158,18 +191,32 @@ JPanel panelNombre = new JPanel();
                     JOptionPane.INFORMATION_MESSAGE);
         });
 
-        panelNumeroLetra.add(agregarNumeroLetraButton);
+        constraints.gridx = 0;
+        constraints.gridy = 1;
+        panelNumeroLetra.add(agregarNumeroLetraButton, constraints);
 
+        constraints.gridx = 0;
+        constraints.gridy = 2;
+        constraints.gridwidth = 4;
+        constraints.fill = GridBagConstraints.HORIZONTAL;
+        add(panelNumeroLetra, constraints);
+
+        // Panel de números y texto
         JPanel panelNumeroTexto = new JPanel();
-        panelNumeroTexto.setLayout(new FlowLayout());
-        add(panelNumeroTexto);
+        panelNumeroTexto.setLayout(new GridBagLayout());
 
         JTextField numeroTextoField = new JTextField(10);
         JTextField textoField = new JTextField(10);
-        panelNumeroTexto.add(new JLabel("Número:"));
-        panelNumeroTexto.add(numeroTextoField);
-        panelNumeroTexto.add(new JLabel("Texto:"));
-        panelNumeroTexto.add(textoField);
+
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        panelNumeroTexto.add(new JLabel("Número:"), constraints);
+        constraints.gridx = 1;
+        panelNumeroTexto.add(numeroTextoField, constraints);
+        constraints.gridx = 2;
+        panelNumeroTexto.add(new JLabel("Texto:"), constraints);
+        constraints.gridx = 3;
+        panelNumeroTexto.add(textoField, constraints);
 
         JButton agregarNumeroTextoButton = new JButton("Agregar Número-Texto");
         agregarNumeroTextoButton.addActionListener(e -> {
@@ -193,21 +240,34 @@ JPanel panelNombre = new JPanel();
                     JOptionPane.INFORMATION_MESSAGE);
         });
 
-        panelNumeroTexto.add(agregarNumeroTextoButton);
+        constraints.gridx = 0;
+        constraints.gridy = 1;
+        panelNumeroTexto.add(agregarNumeroTextoButton, constraints);
 
-        JPanel panelArchivo = new JPanel();
-        panelArchivo.setLayout(new FlowLayout());
-        add(panelArchivo);
+        constraints.gridx = 0;
+        constraints.gridy = 3;
+        constraints.gridwidth = 4;
+        constraints.fill = GridBagConstraints.HORIZONTAL;
+        add(panelNumeroTexto, constraints);
 
+        // Panel de archivos
+        JPanel panelArchivo = newJPanel();
+        panelArchivo.setLayout(new GridBagLayout());
 
+        nombreField = new JTextField(10);
         rutaField = new JTextField(10);
-        panelArchivo.add(new JLabel("Nombre:"));
-        panelArchivo.add(nombreField);
-        panelArchivo.add(new JLabel("Ruta:"));
-        panelArchivo.add(rutaField);
+
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        panelArchivo.add(new JLabel("Nombre:"), constraints);
+        constraints.gridx = 1;
+        panelArchivo.add(nombreField, constraints);
+        constraints.gridx = 2;
+        panelArchivo.add(new JLabel("Ruta:"), constraints);
+        constraints.gridx = 3;
+        panelArchivo.add(rutaField, constraints);
 
         JButton agregarArchivoButton = new JButton("Agregar Archivo");
-
         agregarArchivoButton.addActionListener(e -> {
             String nombre = nombreField.getText();
             String ruta = rutaField.getText();
@@ -220,9 +280,15 @@ JPanel panelNombre = new JPanel();
                     JOptionPane.INFORMATION_MESSAGE);
         });
 
-        panelArchivo.add(agregarArchivoButton);
+        constraints.gridx = 0;
+        constraints.gridy = 1;
+        panelArchivo.add(agregarArchivoButton, constraints);
 
-
+        constraints.gridx = 0;
+        constraints.gridy = 4;
+        constraints.gridwidth = 4;
+        constraints.fill = GridBagConstraints.HORIZONTAL;
+        add(panelArchivo, constraints);
 
         pack();
         setLocationRelativeTo(null);
