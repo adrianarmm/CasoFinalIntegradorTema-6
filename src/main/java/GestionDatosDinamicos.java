@@ -1,14 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.List;
-import java.util.*;
 
 public class GestionDatosDinamicos extends JFrame {
-    private List ventas = new List();
-    private Set<String> nombres = new TreeSet<>();
-    private Map<Integer, Character> numerosLetras = new HashMap<>();
-    private Map<Integer, String> numerosTexto = new HashMap<>();
-    private List archivosIndexados = new List();
 
     private JTextField productoField, cantidadField, nombreField, rutaField, numeroField, letraField, numeroTextoField, textoField;
 
@@ -19,7 +12,7 @@ public class GestionDatosDinamicos extends JFrame {
     private void createAndShowGUI() {
         setTitle("Gestión de Datos Dinámicos");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+        setLayout(new BoxLayout(getContentPane(), BoxLayout.X_AXIS)); // Cambiado a X_AXIS para alinear horizontalmente
 
         addVentaPanel();
         addNombrePanel();
@@ -32,22 +25,27 @@ public class GestionDatosDinamicos extends JFrame {
         setVisible(true);
     }
 
-
     private void addVentaPanel() {
-        JPanel panelVenta = new JPanel();
+        JPanel panelVenta = new JPanel(new GridBagLayout());
         panelVenta.setBorder(BorderFactory.createTitledBorder("Agregar Venta"));
-        panelVenta.setLayout(new GridLayout(0, 2, 5, 5));
 
         productoField = new JTextField(10);
         cantidadField = new JTextField(10);
-        panelVenta.add(new JLabel("Producto:"));
-        panelVenta.add(productoField);
-        panelVenta.add(new JLabel("Cantidad:"));
-        panelVenta.add(cantidadField);
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = GridBagConstraints.RELATIVE;
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.insets = new Insets(5, 5, 5, 5);
+
+        panelVenta.add(new JLabel("Producto:"), gbc);
+        panelVenta.add(productoField, gbc);
+        panelVenta.add(new JLabel("Cantidad:"), gbc);
+        panelVenta.add(cantidadField, gbc);
 
         JButton agregarVentaButton = new JButton("Agregar Venta");
         agregarVentaButton.addActionListener(e -> handleVentaAction());
-        panelVenta.add(agregarVentaButton);
+        panelVenta.add(agregarVentaButton, gbc);
 
         add(panelVenta);
     }
@@ -56,9 +54,6 @@ public class GestionDatosDinamicos extends JFrame {
         try {
             String producto = productoField.getText();
             int cantidad = Integer.parseInt(cantidadField.getText());
-            ventas.add(String.valueOf(new Ventas(producto, cantidad)));
-            productoField.setText("");
-            cantidadField.setText("");
             JOptionPane.showMessageDialog(this, "Venta agregada correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Por favor, ingrese una cantidad válida.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -66,111 +61,129 @@ public class GestionDatosDinamicos extends JFrame {
     }
 
     private void addNombrePanel() {
-        JPanel panelNombre = new JPanel();
+        JPanel panelNombre = new JPanel(new GridBagLayout());
         panelNombre.setBorder(BorderFactory.createTitledBorder("Agregar Nombre"));
-        panelNombre.setLayout(new GridLayout(0, 2, 5, 5));
 
         nombreField = new JTextField(10);
-        panelNombre.add(new JLabel("Nombre:"));
-        panelNombre.add(nombreField);
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = GridBagConstraints.RELATIVE;
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.insets = new Insets(5, 5, 5, 5);
+
+        panelNombre.add(new JLabel("Nombre:"), gbc);
+        panelNombre.add(nombreField, gbc);
 
         JButton agregarNombreButton = new JButton("Agregar Nombre");
-        agregarNombreButton.addActionListener(e -> {
-            String nombre = nombreField.getText();
-            nombres.add(nombre);
-            nombreField.setText("");
-            JOptionPane.showMessageDialog(this, "Nombre agregado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-        });
-        panelNombre.add(agregarNombreButton);
+        agregarNombreButton.addActionListener(e -> handleNombreAction());
+        panelNombre.add(agregarNombreButton, gbc);
 
         add(panelNombre);
     }
 
+    private void handleNombreAction() {
+        String nombre = nombreField.getText();
+        JOptionPane.showMessageDialog(this, "Nombre agregado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+    }
+
     private void addNumeroLetraPanel() {
-        JPanel panelNumeroLetra = new JPanel();
+        JPanel panelNumeroLetra = new JPanel(new GridBagLayout());
         panelNumeroLetra.setBorder(BorderFactory.createTitledBorder("Agregar Número y Letra"));
-        panelNumeroLetra.setLayout(new GridLayout(0, 2, 5, 5));
 
         numeroField = new JTextField(10);
         letraField = new JTextField(10);
-        panelNumeroLetra.add(new JLabel("Número:"));
-        panelNumeroLetra.add(numeroField);
-        panelNumeroLetra.add(new JLabel("Letra:"));
-        panelNumeroLetra.add(letraField);
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = GridBagConstraints.RELATIVE;
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.insets = new Insets(5, 5, 5, 5);
+
+        panelNumeroLetra.add(new JLabel("Número:"), gbc);
+        panelNumeroLetra.add(numeroField, gbc);
+        panelNumeroLetra.add(new JLabel("Letra:"), gbc);
+        panelNumeroLetra.add(letraField, gbc);
 
         JButton agregarNumeroLetraButton = new JButton("Agregar Número y Letra");
-        agregarNumeroLetraButton.addActionListener(e -> {
-            try {
-                int numero = Integer.parseInt(numeroField.getText());
-                char letra = letraField.getText().charAt(0);
-                numerosLetras.put(numero, letra);
-                numeroField.setText("");
-                letraField.setText("");
-                JOptionPane.showMessageDialog(this, "Número y letra agregados correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-            } catch (NumberFormatException | StringIndexOutOfBoundsException ex) {
-                JOptionPane.showMessageDialog(this, "Por favor, ingrese un número y una letra válidos.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        });
-        panelNumeroLetra.add(agregarNumeroLetraButton);
+        agregarNumeroLetraButton.addActionListener(e -> handleNumeroLetraAction());
+        panelNumeroLetra.add(agregarNumeroLetraButton, gbc);
 
         add(panelNumeroLetra);
     }
 
+    private void handleNumeroLetraAction() {
+        try {
+            int numero = Integer.parseInt(numeroField.getText());
+            String letra = letraField.getText();
+            JOptionPane.showMessageDialog(this, "Número y letra agregados correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     private void addNumeroTextoPanel() {
-        JPanel panelNumeroTexto = new JPanel();
+        JPanel panelNumeroTexto = new JPanel(new GridBagLayout());
         panelNumeroTexto.setBorder(BorderFactory.createTitledBorder("Agregar Número y Texto"));
-        panelNumeroTexto.setLayout(new GridLayout(0, 2, 5, 5));
 
         numeroTextoField = new JTextField(10);
         textoField = new JTextField(10);
-        panelNumeroTexto.add(new JLabel("Número:"));
-        panelNumeroTexto.add(numeroTextoField);
-        panelNumeroTexto.add(new JLabel("Texto:"));
-        panelNumeroTexto.add(textoField);
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = GridBagConstraints.RELATIVE;
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.insets = new Insets(5, 5, 5, 5);
+
+        panelNumeroTexto.add(new JLabel("Número:"), gbc);
+        panelNumeroTexto.add(numeroTextoField, gbc);
+        panelNumeroTexto.add(new JLabel("Texto:"), gbc);
+        panelNumeroTexto.add(textoField, gbc);
 
         JButton agregarNumeroTextoButton = new JButton("Agregar Número y Texto");
-        agregarNumeroTextoButton.addActionListener(e -> {
-            try {
-                int numero = Integer.parseInt(numeroTextoField.getText());
-                String texto = textoField.getText();
-                numerosTexto.put(numero, texto);
-                numeroTextoField.setText("");
-                textoField.setText("");
-                JOptionPane.showMessageDialog(this, "Número y texto agregados correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "Por favor, ingrese un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        });
-        panelNumeroTexto.add(agregarNumeroTextoButton);
+        agregarNumeroTextoButton.addActionListener(e -> handleNumeroTextoAction());
+        panelNumeroTexto.add(agregarNumeroTextoButton, gbc);
 
         add(panelNumeroTexto);
     }
 
-    private void addArchivoPanel() {
-        JPanel panelArchivo = new JPanel();
-        panelArchivo.setBorder(BorderFactory.createTitledBorder("Agregar Archivo"));
-        panelArchivo.setLayout(new GridLayout(0, 2, 5, 5));
+    private void handleNumeroTextoAction() {
+        try {
+            int numero = Integer.parseInt(numeroTextoField.getText());
+            String texto = textoField.getText();
+            JOptionPane.showMessageDialog(this, "Número y texto agregados correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
-        nombreField = new JTextField(10);
+    private void addArchivoPanel() {
+        JPanel panelArchivo = new JPanel(new GridBagLayout());
+        panelArchivo.setBorder(BorderFactory.createTitledBorder("Agregar Archivo"));
+
         rutaField = new JTextField(10);
-        panelArchivo.add(new JLabel("Nombre:"));
-        panelArchivo.add(nombreField);
-        panelArchivo.add(new JLabel("Ruta:"));
-        panelArchivo.add(rutaField);
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = GridBagConstraints.RELATIVE;
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.insets = new Insets(5, 5, 5, 5);
+
+        panelArchivo.add(new JLabel("Ruta:"), gbc);
+        panelArchivo.add(rutaField, gbc);
 
         JButton agregarArchivoButton = new JButton("Agregar Archivo");
-        agregarArchivoButton.addActionListener(e -> {
-            String nombre = nombreField.getText();
-            String ruta = rutaField.getText();
-            archivosIndexados.add(String.valueOf(new Archivos(nombre, ruta)));
-            nombreField.setText("");
-            rutaField.setText("");
-            JOptionPane.showMessageDialog(this, "Archivo agregado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-        });
-        panelArchivo.add(agregarArchivoButton);
+        agregarArchivoButton.addActionListener(e -> handleArchivoAction());
+        panelArchivo.add(agregarArchivoButton, gbc);
 
         add(panelArchivo);
     }
+
+    private void handleArchivoAction() {
+        String ruta = rutaField.getText();
+        JOptionPane.showMessageDialog(this, "Archivo agregado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+    }
+
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new GestionDatosDinamicos()::createAndShowGUI);
