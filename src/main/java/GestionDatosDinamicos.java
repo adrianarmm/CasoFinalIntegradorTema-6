@@ -32,6 +32,7 @@ public class GestionDatosDinamicos extends JFrame {
         setVisible(true);
     }
 
+
     private void addVentaPanel() {
         JPanel panelVenta = new JPanel();
         panelVenta.setBorder(BorderFactory.createTitledBorder("Agregar Venta"));
