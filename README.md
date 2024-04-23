@@ -1,4 +1,4 @@
-## Análisis detallado del CASO FINAL INTEGRADOR 6
+# Análisis detallado del CASO FINAL INTEGRADOR 6
 
 El código proporcionado para `GestionDatosDinamicos` es una aplicación GUI de Java que utiliza Swing, diseñada para gestionar datos de diferentes categorías a través de una interfaz gráfica de usuario. Vamos a desglosar cada parte y su funcionalidad:
 
