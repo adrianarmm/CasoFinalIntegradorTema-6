@@ -50,7 +50,7 @@ class Archivo implements Comparable<Archivos> {
     }
 }
 
-public class GestionDatosDinamicosSwing extends JFrame {
+public class GestionDatosDinamicos extends JFrame {
     private static List<Venta> ventas = new ArrayList<>();
     private static Set<String> nombres = new TreeSet<>();
     private static Map<Integer, Character> numerosLetras = new HashMap<>();
