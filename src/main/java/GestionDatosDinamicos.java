@@ -21,8 +21,15 @@ public class GestionDatosDinamicos extends JFrame {
         JButton btnNumeroTexto = new JButton("Añadir Número y Texto");
         JButton btnArchivo = new JButton("Añadir Archivo");
 
+        customizeButton(btnVenta, new Color(255, 102, 102)); // Light red
+        customizeButton(btnNombre, new Color(102, 204, 255)); // Light blue
+        customizeButton(btnNumeroLetra, new Color(255, 178, 102)); // Orange
+        customizeButton(btnNumeroTexto, new Color(153, 204, 255)); // Soft blue
+        customizeButton(btnArchivo, new Color(102, 255, 178)); // Mint green
+
         btnVenta.addActionListener(e -> openVentaDialog());
         btnNombre.addActionListener(e -> openNombreDialog());
+        btnNumeroLetra.addActionListener(e -> openNumeroLetraDialog());
         btnNumeroTexto.addActionListener(e -> openNumeroTextoDialog());
         btnArchivo.addActionListener(e -> openArchivoDialog());
 
@@ -37,23 +44,26 @@ public class GestionDatosDinamicos extends JFrame {
         setVisible(true);
     }
 
+    private void customizeButton(JButton button, Color bgColor) {
+        button.setBackground(bgColor);
+        button.setOpaque(true);
+        button.setBorderPainted(false);
+        button.setFont(new Font("Arial", Font.BOLD, 12));
+    }
+
     private void openVentaDialog() {
-        JDialog dialog = new JDialog(this, "Añadir Venta", true);
-        dialog.setLayout(new FlowLayout());
+        JDialog dialog = createDialog("Añadir Venta");
         productoField = new JTextField(10);
         cantidadField = new JTextField(10);
-        dialog.add(new JLabel("Producto:"));
-        dialog.add(productoField);
-        dialog.add(new JLabel("Cantidad:"));
-        dialog.add(cantidadField);
+
+        addComponentsToDialog(dialog, new JLabel("Producto:"), productoField);
+        addComponentsToDialog(dialog, new JLabel("Cantidad:"), cantidadField);
+
         JButton submit = new JButton("Submit");
         submit.addActionListener(e -> {
             try {
                 String producto = productoField.getText();
                 int cantidad = Integer.parseInt(cantidadField.getText());
-
-                // Aquí agregarías la venta a tu set o base de datos
-
                 JOptionPane.showMessageDialog(dialog, "Venta agregada correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                 dialog.dispose();
             } catch (NumberFormatException ex) {
@@ -62,52 +72,75 @@ public class GestionDatosDinamicos extends JFrame {
         });
         dialog.add(submit);
         dialog.pack();
+        dialog.setVisible(true);
+    }
+
+    private JDialog createDialog(String title) {
+        JDialog dialog = new JDialog(this, title, true);
+        dialog.setLayout(new FlowLayout());
         dialog.setLocationRelativeTo(this);
+        return dialog;
+    }
+
+    private void addComponentsToDialog(JDialog dialog, JLabel label, JTextField textField) {
+        dialog.add(label);
+        dialog.add(textField);
+    }
+
+    private void openNombreDialog() {
+        JDialog dialog = createDialog("Añadir Nombre");
+        nombreField = new JTextField(10);
+
+        addComponentsToDialog(dialog, new JLabel("Nombre:"), nombreField);
+
+        JButton submit = new JButton("Submit");
+        submit.addActionListener(e -> {
+            String nombre = nombreField.getText();
+            JOptionPane.showMessageDialog(dialog, "Nombre agregado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            dialog.dispose();
+        });
+        dialog.add(submit);
+        dialog.pack();
         dialog.setVisible(true);
     }
 
     private void openNumeroLetraDialog() {
-        JDialog dialog = new JDialog(this, "Añadir Número y Letra", true);
-        dialog.setLayout(new FlowLayout());
+        JDialog dialog = createDialog("Añadir Número y Letra");
         numeroField = new JTextField(10);
         letraField = new JTextField(10);
-        dialog.add(new JLabel("Número:"));
-        dialog.add(numeroField);
-        dialog.add(new JLabel("Letra:"));
-        dialog.add(letraField);
+
+        addComponentsToDialog(dialog, new JLabel("Número:"), numeroField);
+        addComponentsToDialog(dialog, new JLabel("Letra:"), letraField);
+
         JButton submit = new JButton("Submit");
         submit.addActionListener(e -> {
             try {
                 int numero = Integer.parseInt(numeroField.getText());
-                char letra = letraField.getText().charAt(0);
-                // Aquí agregarías el número y letra a tu set o base de datos
+                String letra = letraField.getText();
                 JOptionPane.showMessageDialog(dialog, "Número y letra agregados correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                 dialog.dispose();
-            } catch (NumberFormatException | IndexOutOfBoundsException ex) {
-                JOptionPane.showMessageDialog(dialog, "Por favor, ingrese un número y letra válidos.", "Error", JOptionPane.ERROR_MESSAGE);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(dialog, "Por favor, ingrese un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
         dialog.add(submit);
         dialog.pack();
-        dialog.setLocationRelativeTo(this);
         dialog.setVisible(true);
     }
 
     private void openNumeroTextoDialog() {
-        JDialog dialog = new JDialog(this, "Añadir Número y Texto", true);
-        dialog.setLayout(new FlowLayout());
+        JDialog dialog = createDialog("Añadir Número y Texto");
         numeroTextoField = new JTextField(10);
         textoField = new JTextField(10);
-        dialog.add(new JLabel("Número:"));
-        dialog.add(numeroTextoField);
-        dialog.add(new JLabel("Texto:"));
-        dialog.add(textoField);
+
+        addComponentsToDialog(dialog, new JLabel("Número:"), numeroTextoField);
+        addComponentsToDialog(dialog, new JLabel("Texto:"), textoField);
+
         JButton submit = new JButton("Submit");
         submit.addActionListener(e -> {
             try {
                 int numero = Integer.parseInt(numeroTextoField.getText());
                 String texto = textoField.getText();
-                // Aquí agregarías el número y texto a tu set o base de datos
                 JOptionPane.showMessageDialog(dialog, "Número y texto agregados correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                 dialog.dispose();
             } catch (NumberFormatException ex) {
@@ -116,46 +149,23 @@ public class GestionDatosDinamicos extends JFrame {
         });
         dialog.add(submit);
         dialog.pack();
-        dialog.setLocationRelativeTo(this);
         dialog.setVisible(true);
     }
 
     private void openArchivoDialog() {
-        JDialog dialog = new JDialog(this, "Añadir Archivo", true);
-        dialog.setLayout(new FlowLayout());
+        JDialog dialog = createDialog("Añadir Archivo");
         rutaField = new JTextField(10);
-        dialog.add(new JLabel("Ruta:"));
-        dialog.add(rutaField);
+
+        addComponentsToDialog(dialog, new JLabel("Ruta:"), rutaField);
+
         JButton submit = new JButton("Submit");
         submit.addActionListener(e -> {
             String ruta = rutaField.getText();
-            // Aquí agregarías la ruta a tu set o base de datos
-            JOptionPane.showMessageDialog(dialog, "Ruta agregada correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(dialog, "Archivo agregado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
             dialog.dispose();
         });
         dialog.add(submit);
         dialog.pack();
-        dialog.setLocationRelativeTo(this);
-        dialog.setVisible(true);
-    }
-
-
-    private void openNombreDialog() {
-        JDialog dialog = new JDialog(this, "Añadir Nombre", true);
-        dialog.setLayout(new FlowLayout());
-        nombreField = new JTextField(10);
-        dialog.add(new JLabel("Nombre:"));
-        dialog.add(nombreField);
-        JButton submit = new JButton("Submit");
-        submit.addActionListener(e -> {
-            String nombre = nombreField.getText();
-            // Aquí agregarías el nombre a tu set o base de datos
-            JOptionPane.showMessageDialog(dialog, "Nombre agregado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-            dialog.dispose();
-        });
-        dialog.add(submit);
-        dialog.pack();
-        dialog.setLocationRelativeTo(this);
         dialog.setVisible(true);
     }
 
