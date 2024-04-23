@@ -3,60 +3,14 @@ import java.awt.*;
 import java.util.*;
 import java.util.List;
 
-class Venta {
-    private final String producto;
-    private final int cantidad;
-
-    public Venta(String producto, int cantidad) {
-        this.producto = producto;
-        this.cantidad = cantidad;
-    }
-
-    @Override
-    public String toString() {
-        return "Producto: " + producto + ", Cantidad: " + cantidad;
-    }
-
-    public String getProducto() {
-        return producto;
-    }
-
-    public int getCantidad() {
-        return cantidad;
-    }
-}
-
-class Archivo implements Comparable<Archivos> {
-    private final String nombre;
-    private final String ruta;
-
-    public Archivo(String nombre, String ruta) {
-        this.nombre = nombre;
-        this.ruta = ruta;
-    }
-
-    @Override
-    public String toString() {
-        return "Nombre: " + nombre + ", Ruta: " + ruta;
-    }
-
-    @Override
-    public int compareTo(Archivos otroArchivo) {
-        return this.nombre.compareTo(otroArchivo.nombre);
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-}
-
 public class GestionDatosDinamicos extends JFrame {
-    private static List<Venta> ventas = new ArrayList<>();
+    private static List<Ventas> ventas = new ArrayList<>();
     private static Set<String> nombres = new TreeSet<>();
     private static Map<Integer, Character> numerosLetras = new HashMap<>();
     private static Map<Integer, String> numerosTexto = new HashMap<>();
-    private static List<Archivo> archivosIndexados = new ArrayList<Archivo>();
-    private JTextField productoField, cantidadField, nombreField, rutaField;
+    private static List<Archivos> archivosIndexados = new ArrayList<>();
+
+    private JTextField productoField, cantidadField, nombreField, rutaField, numeroField, letraField, numeroTextoField, textoField;
 
     public GestionDatosDinamicos() {
         createAndShowGUI();
@@ -65,42 +19,36 @@ public class GestionDatosDinamicos extends JFrame {
     private void createAndShowGUI() {
         setTitle("Gestión de Datos Dinámicos");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setLayout(new GridBagLayout());
-        GridBagConstraints constraints = new GridBagConstraints();
-        constraints.insets = new Insets(5, 5, 5, 5);
-        addComponentsToPane(constraints);
+        setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+
+        addVentaPanel();
+        addNombrePanel();
+        addNumeroLetraPanel();
+        addNumeroTextoPanel();
+        addArchivoPanel();
+
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
     }
 
-    private void addComponentsToPane(GridBagConstraints constraints) {
-        addVentaPanel(constraints);
-        addNombrePanel(constraints);
-        addNumeroLetraPanel(constraints);
-        addNumeroTextoPanel(constraints);
-        addArchivoPanel(constraints);
-    }
+    private void addVentaPanel() {
+        JPanel panelVenta = new JPanel();
+        panelVenta.setBorder(BorderFactory.createTitledBorder("Agregar Venta"));
+        panelVenta.setLayout(new GridLayout(0, 2, 5, 5));
 
-    private void addVentaPanel(GridBagConstraints constraints) {
-        JPanel panelVenta = new JPanel(new GridBagLayout());
         productoField = new JTextField(10);
         cantidadField = new JTextField(10);
-
-        addComponent(panelVenta, new JLabel("Producto:"), 1, 0, constraints);
-        addComponent(panelVenta, productoField, 2, 0, constraints);
-        addComponent(panelVenta, new JLabel("Cantidad:"), 1, 1, constraints);
-        addComponent(panelVenta, cantidadField, 2, 1, constraints);
+        panelVenta.add(new JLabel("Producto:"));
+        panelVenta.add(productoField);
+        panelVenta.add(new JLabel("Cantidad:"));
+        panelVenta.add(cantidadField);
 
         JButton agregarVentaButton = new JButton("Agregar Venta");
         agregarVentaButton.addActionListener(e -> handleVentaAction());
-        addComponent(panelVenta, agregarVentaButton, 1, 2, constraints);
+        panelVenta.add(agregarVentaButton);
 
-        constraints.gridx = 0;
-        constraints.gridy = 0;
-        constraints.gridwidth = 3;
-        constraints.fill = GridBagConstraints.HORIZONTAL;
-        add(panelVenta, constraints);
+        add(panelVenta);
     }
 
     private void handleVentaAction() {
@@ -116,24 +64,20 @@ public class GestionDatosDinamicos extends JFrame {
         }
     }
 
-    private void addNombrePanel(GridBagConstraints constraints) {
+    private void addNombrePanel() {
+        JPanel panelNombre = new JPanel();
+        panelNombre.setBorder(BorderFactory.createTitledBorder("Agregar Nombre"));
+        panelNombre.setLayout(new GridLayout(0, 2, 5, 5));
 
-        JPanel panelNombre = new JPanel(new GridBagLayout());
         nombreField = new JTextField(10);
-
-        addComponent(panelNombre, new JLabel("Nombre:"), 1, 0, constraints);
-        addComponent(panelNombre, nombreField, 2, 0, constraints);
+        panelNombre.add(new JLabel("Nombre:"));
+        panelNombre.add(nombreField);
 
         JButton agregarNombreButton = new JButton("Agregar Nombre");
         agregarNombreButton.addActionListener(e -> handleNombreAction());
-        addComponent(panelNombre, agregarNombreButton, 1, 1, constraints);
+        panelNombre.add(agregarNombreButton);
 
-        constraints.gridx = 0;
-        constraints.gridy = 1;
-        constraints.gridwidth = 3;
-        constraints.fill = GridBagConstraints.HORIZONTAL;
-        add(panelNombre, constraints);
-
+        add(panelNombre);
     }
 
     private void handleNombreAction() {
@@ -143,29 +87,26 @@ public class GestionDatosDinamicos extends JFrame {
         JOptionPane.showMessageDialog(this, "Nombre agregado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    private void addNumeroLetraPanel(GridBagConstraints constraints) {
+    private void addNumeroLetraPanel() {
+        JPanel panelNumeroLetra = new JPanel();
+        panelNumeroLetra.setBorder(BorderFactory.createTitledBorder("Agregar Número y Letra"));
+        panelNumeroLetra.setLayout(new GridLayout(0, 2, 5, 5));
 
-        JPanel panelNumeroLetra = new JPanel(new GridBagLayout());
-        JTextField numeroField = new JTextField(10);
-        JTextField letraField = new JTextField(10);
-
-        addComponent(panelNumeroLetra, new JLabel("Número:"), 1, 0, constraints);
-        addComponent(panelNumeroLetra, numeroField, 2, 0, constraints);
-        addComponent(panelNumeroLetra, new JLabel("Letra:"), 1, 1, constraints);
-        addComponent(panelNumeroLetra, letraField, 2, 1, constraints);
+        numeroField = new JTextField(10);
+        letraField = new JTextField(10);
+        panelNumeroLetra.add(new JLabel("Número:"));
+        panelNumeroLetra.add(numeroField);
+        panelNumeroLetra.add(new JLabel("Letra:"));
+        panelNumeroLetra.add(letraField);
 
         JButton agregarNumeroLetraButton = new JButton("Agregar Número y Letra");
-        agregarNumeroLetraButton.addActionListener(e -> handleNumeroLetraAction(numeroField, letraField));
-        addComponent(panelNumeroLetra, agregarNumeroLetraButton, 1, 2, constraints);
+        agregarNumeroLetraButton.addActionListener(e -> handleNumeroLetraAction());
+        panelNumeroLetra.add(agregarNumeroLetraButton);
 
-        constraints.gridx = 0;
-        constraints.gridy = 2;
-        constraints.gridwidth = 3;
-        constraints.fill = GridBagConstraints.HORIZONTAL;
-        add(panelNumeroLetra, constraints);
+        add(panelNumeroLetra);
     }
 
-    private void handleNumeroLetraAction(JTextField numeroField, JTextField letraField) {
+    private void handleNumeroLetraAction() {
         try {
             int numero = Integer.parseInt(numeroField.getText());
             char letra = letraField.getText().charAt(0);
@@ -178,34 +119,31 @@ public class GestionDatosDinamicos extends JFrame {
         }
     }
 
-    private void addNumeroTextoPanel(GridBagConstraints constraints) {
+    private void addNumeroTextoPanel() {
+        JPanel panelNumeroTexto = new JPanel();
+        panelNumeroTexto.setBorder(BorderFactory.createTitledBorder("Agregar Número y Texto"));
+        panelNumeroTexto.setLayout(new GridLayout(0, 2, 5, 5));
 
-        JPanel panelNumeroTexto = new JPanel(new GridBagLayout());
-        JTextField numeroField = new JTextField(10);
-        JTextField textoField = new JTextField(10);
-
-        addComponent(panelNumeroTexto, new JLabel("Número:"), 1, 0, constraints);
-        addComponent(panelNumeroTexto, numeroField, 2, 0, constraints);
-        addComponent(panelNumeroTexto, new JLabel("Texto:"), 1, 1, constraints);
-        addComponent(panelNumeroTexto, textoField, 2, 1, constraints);
+        numeroTextoField = new JTextField(10);
+        textoField = new JTextField(10);
+        panelNumeroTexto.add(new JLabel("Número:"));
+        panelNumeroTexto.add(numeroTextoField);
+        panelNumeroTexto.add(new JLabel("Texto:"));
+        panelNumeroTexto.add(textoField);
 
         JButton agregarNumeroTextoButton = new JButton("Agregar Número y Texto");
-        agregarNumeroTextoButton.addActionListener(e -> handleNumeroTextoAction(numeroField, textoField));
-        addComponent(panelNumeroTexto, agregarNumeroTextoButton, 1, 2, constraints);
+        agregarNumeroTextoButton.addActionListener(e -> handleNumeroTextoAction());
+        panelNumeroTexto.add(agregarNumeroTextoButton);
 
-        constraints.gridx = 0;
-        constraints.gridy = 3;
-        constraints.gridwidth = 3;
-        constraints.fill = GridBagConstraints.HORIZONTAL;
-        add(panelNumeroTexto, constraints);
+        add(panelNumeroTexto);
     }
 
-    private void handleNumeroTextoAction(JTextField numeroField, JTextField textoField) {
+    private void handleNumeroTextoAction() {
         try {
-            int numero = Integer.parseInt(numeroField.getText());
+            int numero = Integer.parseInt(numeroTextoField.getText());
             String texto = textoField.getText();
             numerosTexto.put(numero, texto);
-            numeroField.setText("");
+            numeroTextoField.setText("");
             textoField.setText("");
             JOptionPane.showMessageDialog(this, "Número y texto agregados correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         } catch (NumberFormatException ex) {
@@ -213,26 +151,23 @@ public class GestionDatosDinamicos extends JFrame {
         }
     }
 
-    private void addArchivoPanel(GridBagConstraints constraints) {
+    private void addArchivoPanel() {
+        JPanel panelArchivo = new JPanel();
+        panelArchivo.setBorder(BorderFactory.createTitledBorder("Agregar Archivo"));
+        panelArchivo.setLayout(new GridLayout(0, 2, 5, 5));
 
-        JPanel panelArchivo = new JPanel(new GridBagLayout());
         nombreField = new JTextField(10);
         rutaField = new JTextField(10);
-
-        addComponent(panelArchivo, new JLabel("Nombre:"), 1, 0, constraints);
-        addComponent(panelArchivo, nombreField, 2, 0, constraints);
-        addComponent(panelArchivo, new JLabel("Ruta:"), 1, 1, constraints);
-        addComponent(panelArchivo, rutaField, 2, 1, constraints);
+        panelArchivo.add(new JLabel("Nombre:"));
+        panelArchivo.add(nombreField);
+        panelArchivo.add(new JLabel("Ruta:"));
+        panelArchivo.add(rutaField);
 
         JButton agregarArchivoButton = new JButton("Agregar Archivo");
         agregarArchivoButton.addActionListener(e -> handleArchivoAction());
-        addComponent(panelArchivo, agregarArchivoButton, 1, 2, constraints);
+        panelArchivo.add(agregarArchivoButton);
 
-        constraints.gridx = 0;
-        constraints.gridy = 4;
-        constraints.gridwidth = 3;
-        constraints.fill = GridBagConstraints.HORIZONTAL;
-        add(panelArchivo, constraints);
+        add(panelArchivo);
     }
 
     private void handleArchivoAction() {
@@ -242,12 +177,6 @@ public class GestionDatosDinamicos extends JFrame {
         nombreField.setText("");
         rutaField.setText("");
         JOptionPane.showMessageDialog(this, "Archivo agregado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-    }
-
-    private void addComponent(JPanel panel, Component component, int x, int y, GridBagConstraints constraints) {
-        constraints.gridx = x;
-        constraints.gridy = y;
-        panel.add(component, constraints);
     }
 
     public static void main(String[] args) {
