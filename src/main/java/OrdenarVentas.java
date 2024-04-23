@@ -15,14 +15,22 @@ class Ventas {
     public String toString() {
         return "Producto: " + producto + ", Cantidad: " + cantidad;
     }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public <U> U getProducto() {
+        return (U) producto;
+    }
 }
 
 public class OrdenarVentas {
     public static void main(String[] args) {
-        List<Venta> ventas = new ArrayList<>();
-        ventas.add(new Venta("Manzanas", 50));
-        ventas.add(new Venta("Bananas", 20));
-        ventas.add(new Venta("Naranjas", 70));
+        List<Ventas> ventas = new ArrayList<>();
+        ventas.add(new Ventas("Manzanas", 50));
+        ventas.add(new Ventas("Bananas", 20));
+        ventas.add(new Ventas("Naranjas", 70));
 
         // Ordenar por cantidad
         ventas.sort(Comparator.comparingInt(v -> v.getCantidad()));
