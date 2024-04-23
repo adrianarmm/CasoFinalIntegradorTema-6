@@ -7,7 +7,7 @@ import java.util.List   ;
 
 public class IndexadorArchivos {
 
-    private List<Archivo> archivos = new ArrayList<>();
+    private List<Archivos> archivos = new ArrayList<>();
 
     public void indexarDirectorio(String rutaDirectorio) {
         File directorio = new File(rutaDirectorio);
