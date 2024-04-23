@@ -5,17 +5,17 @@ import java.util.List;
 
 public class IndexadorArchivos {
 
-    private List<archivo> archivos = new ArrayList<>();
+    private List<Archivo> archivos = new ArrayList<>();
 
     public void indexarDirectorio(String rutaDirectorio) {
         File directorio = new File(rutaDirectorio);
         File[] archivosEnDirectorio = directorio.listFiles();
         if (archivosEnDirectorio != null) {
-            for (File archivo : archivosEnDirectorio) {
-                if (archivo.isFile()) {
-                    archivos.add(new archivo(archivo.getName(), archivo.getAbsolutePath()));
-                } else if (archivo.isDirectory()) {
-                    indexarDirectorio(archivo.getAbsolutePath());
+            for (File Archivo : archivosEnDirectorio) {
+                if (Archivo.isFile()) {
+                    archivos.add(new Archivo(Archivo.getName(), Archivo.getAbsolutePath()));
+                } else if (Archivo.isDirectory()) {
+                    indexarDirectorio(Archivo.getAbsolutePath());
                 }
             }
         }
