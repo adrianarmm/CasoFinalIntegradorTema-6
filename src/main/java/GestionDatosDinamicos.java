@@ -23,7 +23,6 @@ public class GestionDatosDinamicos extends JFrame {
 
         btnVenta.addActionListener(e -> openVentaDialog());
         btnNombre.addActionListener(e -> openNombreDialog());
-        btnNumeroLetra.addActionListener(e -> openNumeroLetraDialog());
         btnNumeroTexto.addActionListener(e -> openNumeroTextoDialog());
         btnArchivo.addActionListener(e -> openArchivoDialog());
 
@@ -131,7 +130,7 @@ public class GestionDatosDinamicos extends JFrame {
         submit.addActionListener(e -> {
             String ruta = rutaField.getText();
             // Aquí agregarías la ruta a tu set o base de datos
-            JOptionPane.showMessageDialog(dialog, "Archivo agregado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(dialog, "Ruta agregada correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
             dialog.dispose();
         });
         dialog.add(submit);
@@ -139,6 +138,7 @@ public class GestionDatosDinamicos extends JFrame {
         dialog.setLocationRelativeTo(this);
         dialog.setVisible(true);
     }
+
 
     private void openNombreDialog() {
         JDialog dialog = new JDialog(this, "Añadir Nombre", true);
