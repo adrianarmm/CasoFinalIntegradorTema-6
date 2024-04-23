@@ -1,14 +1,14 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.List;
 import java.util.*;
-import java.util.List;
 
 public class GestionDatosDinamicos extends JFrame {
-    private static List<Ventas> ventas = new ArrayList<>();
-    private static Set<String> nombres = new TreeSet<>();
-    private static Map<Integer, Character> numerosLetras = new HashMap<>();
-    private static Map<Integer, String> numerosTexto = new HashMap<>();
-    private static List<Archivos> archivosIndexados = new ArrayList<>();
+    private List ventas = new List();
+    private Set<String> nombres = new TreeSet<>();
+    private Map<Integer, Character> numerosLetras = new HashMap<>();
+    private Map<Integer, String> numerosTexto = new HashMap<>();
+    private List archivosIndexados = new ArrayList<>();
 
     private JTextField productoField, cantidadField, nombreField, rutaField, numeroField, letraField, numeroTextoField, textoField;
 
@@ -55,7 +55,7 @@ public class GestionDatosDinamicos extends JFrame {
         try {
             String producto = productoField.getText();
             int cantidad = Integer.parseInt(cantidadField.getText());
-            ventas.add(new Ventas(producto, cantidad));
+            ventas.add(String.valueOf(new Ventas(producto, cantidad)));
             productoField.setText("");
             cantidadField.setText("");
             JOptionPane.showMessageDialog(this, "Venta agregada correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
@@ -74,17 +74,15 @@ public class GestionDatosDinamicos extends JFrame {
         panelNombre.add(nombreField);
 
         JButton agregarNombreButton = new JButton("Agregar Nombre");
-        agregarNombreButton.addActionListener(e -> handleNombreAction());
+        agregarNombreButton.addActionListener(e -> {
+            String nombre = nombreField.getText();
+            nombres.add(nombre);
+            nombreField.setText("");
+            JOptionPane.showMessageDialog(this, "Nombre agregado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        });
         panelNombre.add(agregarNombreButton);
 
         add(panelNombre);
-    }
-
-    private void handleNombreAction() {
-        String nombre = nombreField.getText();
-        nombres.add(nombre);
-        nombreField.setText("");
-        JOptionPane.showMessageDialog(this, "Nombre agregado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
     }
 
     private void addNumeroLetraPanel() {
@@ -100,23 +98,21 @@ public class GestionDatosDinamicos extends JFrame {
         panelNumeroLetra.add(letraField);
 
         JButton agregarNumeroLetraButton = new JButton("Agregar Número y Letra");
-        agregarNumeroLetraButton.addActionListener(e -> handleNumeroLetraAction());
+        agregarNumeroLetraButton.addActionListener(e -> {
+            try {
+                int numero = Integer.parseInt(numeroField.getText());
+                char letra = letraField.getText().charAt(0);
+                numerosLetras.put(numero, letra);
+                numeroField.setText("");
+                letraField.setText("");
+                JOptionPane.showMessageDialog(this, "Número y letra agregados correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            } catch (NumberFormatException | StringIndexOutOfBoundsException ex) {
+                JOptionPane.showMessageDialog(this, "Por favor, ingrese un número y una letra válidos.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
         panelNumeroLetra.add(agregarNumeroLetraButton);
 
         add(panelNumeroLetra);
-    }
-
-    private void handleNumeroLetraAction() {
-        try {
-            int numero = Integer.parseInt(numeroField.getText());
-            char letra = letraField.getText().charAt(0);
-            numerosLetras.put(numero, letra);
-            numeroField.setText("");
-            letraField.setText("");
-            JOptionPane.showMessageDialog(this, "Número y letra agregados correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-        } catch (NumberFormatException | StringIndexOutOfBoundsException ex) {
-            JOptionPane.showMessageDialog(this, "Por favor, ingrese un número y una letra válidos.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
     }
 
     private void addNumeroTextoPanel() {
@@ -132,23 +128,21 @@ public class GestionDatosDinamicos extends JFrame {
         panelNumeroTexto.add(textoField);
 
         JButton agregarNumeroTextoButton = new JButton("Agregar Número y Texto");
-        agregarNumeroTextoButton.addActionListener(e -> handleNumeroTextoAction());
+        agregarNumeroTextoButton.addActionListener(e -> {
+            try {
+                int numero = Integer.parseInt(numeroTextoField.getText());
+                String texto = textoField.getText();
+                numerosTexto.put(numero, texto);
+                numeroTextoField.setText("");
+                textoField.setText("");
+                JOptionPane.showMessageDialog(this, "Número y texto agregados correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Por favor, ingrese un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
         panelNumeroTexto.add(agregarNumeroTextoButton);
 
         add(panelNumeroTexto);
-    }
-
-    private void handleNumeroTextoAction() {
-        try {
-            int numero = Integer.parseInt(numeroTextoField.getText());
-            String texto = textoField.getText();
-            numerosTexto.put(numero, texto);
-            numeroTextoField.setText("");
-            textoField.setText("");
-            JOptionPane.showMessageDialog(this, "Número y texto agregados correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Por favor, ingrese un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
     }
 
     private void addArchivoPanel() {
@@ -164,19 +158,17 @@ public class GestionDatosDinamicos extends JFrame {
         panelArchivo.add(rutaField);
 
         JButton agregarArchivoButton = new JButton("Agregar Archivo");
-        agregarArchivoButton.addActionListener(e -> handleArchivoAction());
+        agregarArchivoButton.addActionListener(e -> {
+            String nombre = nombreField.getText();
+            String ruta = rutaField.getText();
+            archivosIndexados.add(String.valueOf(new Archivos(nombre, ruta)));
+            nombreField.setText("");
+            rutaField.setText("");
+            JOptionPane.showMessageDialog(this, "Archivo agregado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        });
         panelArchivo.add(agregarArchivoButton);
 
         add(panelArchivo);
-    }
-
-    private void handleArchivoAction() {
-        String nombre = nombreField.getText();
-        String ruta = rutaField.getText();
-        archivosIndexados.add(new Archivos(nombre, ruta));
-        nombreField.setText("");
-        rutaField.setText("");
-        JOptionPane.showMessageDialog(this, "Archivo agregado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
     }
 
     public static void main(String[] args) {
