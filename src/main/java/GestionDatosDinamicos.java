@@ -26,11 +26,11 @@ class Venta {
     }
 }
 
-class Archivos implements Comparable<Archivos> {
+class Archivo implements Comparable<Archivos> {
     private final String nombre;
     private final String ruta;
 
-    public Archivos(String nombre, String ruta) {
+    public Archivo(String nombre, String ruta) {
         this.nombre = nombre;
         this.ruta = ruta;
     }
@@ -293,6 +293,10 @@ public class GestionDatosDinamicos extends JFrame {
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
+    }
+
+    private JPanel newJPanel() {
+        return new JPanel();
     }
 
     public static void main(String[] args) {
