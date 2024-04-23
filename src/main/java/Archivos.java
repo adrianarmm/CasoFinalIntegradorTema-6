@@ -1,5 +1,5 @@
 class Archivos implements Comparable<Archivos> {
-    private final String nombre;
+    final String nombre;
     private final String ruta;
 
     public Archivos(String nombre, String ruta) {
