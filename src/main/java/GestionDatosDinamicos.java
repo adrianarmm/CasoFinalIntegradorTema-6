@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.util.*;
 
 class Venta {
@@ -26,7 +25,7 @@ class Venta {
     }
 }
 
-class Archivo implements Comparable<Archivo> {
+class Archivo implements Comparable<Archivos> {
     private final String nombre;
     private final String ruta;
 
@@ -41,7 +40,7 @@ class Archivo implements Comparable<Archivo> {
     }
 
     @Override
-    public int compareTo(Archivo otroArchivo) {
+    public int compareTo(Archivos otroArchivo) {
         return this.nombre.compareTo(otroArchivo.nombre);
     }
 
@@ -55,7 +54,7 @@ public class GestionDatosDinamicosSwing extends JFrame {
     private static Set<String> nombres = new TreeSet<>();
     private static Map<Integer, Character> numerosLetras = new HashMap<>();
     private static Map<Integer, String> numerosTexto = new HashMap<>();
-    private static List<Archivo> archivosIndexados = new ArrayList<>();
+    private static List<Archivos> archivosIndexados = new ArrayList<>();
 
     private JTextField productoField, cantidadField, nombreField, rutaField;
 
