@@ -104,6 +104,126 @@ public class GestionDatosDinamicos extends JFrame {
 
         // Agrega más paneles y botones para otras funcionalidades como modificar y eliminar ventas, manejar nombres y archivos.
 
+JPanel panelNombre = new JPanel();
+        panelNombre.setLayout(new FlowLayout());
+        add(panelNombre);
+
+        nombreField = new JTextField(10);
+        panelNombre.add(new JLabel("Nombre:"));
+        panelNombre.add(nombreField);
+
+        JButton agregarNombreButton = new JButton("Agregar Nombre");
+        agregarNombreButton.addActionListener(e -> {
+            String nombre = nombreField.getText();
+            nombres.add(nombre);
+            nombreField.setText("");
+            JOptionPane.showMessageDialog(this,
+                    "Nombre agregado correctamente.",
+                    "Éxito",
+                    JOptionPane.INFORMATION_MESSAGE);
+        });
+
+        panelNombre.add(agregarNombreButton);
+
+        JPanel panelNumeroLetra = new JPanel();
+        panelNumeroLetra.setLayout(new FlowLayout());
+        add(panelNumeroLetra);
+
+        JTextField numeroField = new JTextField(10);
+        JTextField letraField = new JTextField(10);
+        panelNumeroLetra.add(new JLabel("Número:"));
+        panelNumeroLetra.add(numeroField);
+        panelNumeroLetra.add(new JLabel("Letra:"));
+        panelNumeroLetra.add(letraField);
+
+        JButton agregarNumeroLetraButton = new JButton("Agregar Número-Letra");
+        agregarNumeroLetraButton.addActionListener(e -> {
+            int numero;
+            try {
+                numero = Integer.parseInt(numeroField.getText());
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this,
+                        "Por favor, ingrese un número válido.",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            char letra = letraField.getText().charAt(0);
+            numerosLetras.put(numero, letra);
+            numeroField.setText("");
+            letraField.setText("");
+            JOptionPane.showMessageDialog(this,
+                    "Número-Letra agregado correctamente.",
+                    "Éxito",
+                    JOptionPane.INFORMATION_MESSAGE);
+        });
+
+        panelNumeroLetra.add(agregarNumeroLetraButton);
+
+        JPanel panelNumeroTexto = new JPanel();
+        panelNumeroTexto.setLayout(new FlowLayout());
+        add(panelNumeroTexto);
+
+        JTextField numeroTextoField = new JTextField(10);
+        JTextField textoField = new JTextField(10);
+        panelNumeroTexto.add(new JLabel("Número:"));
+        panelNumeroTexto.add(numeroTextoField);
+        panelNumeroTexto.add(new JLabel("Texto:"));
+        panelNumeroTexto.add(textoField);
+
+        JButton agregarNumeroTextoButton = new JButton("Agregar Número-Texto");
+        agregarNumeroTextoButton.addActionListener(e -> {
+            int numero;
+            try {
+                numero = Integer.parseInt(numeroTextoField.getText());
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this,
+                        "Por favor, ingrese un número válido.",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            String texto = textoField.getText();
+            numerosTexto.put(numero, texto);
+            numeroTextoField.setText("");
+            textoField.setText("");
+            JOptionPane.showMessageDialog(this,
+                    "Número-Texto agregado correctamente.",
+                    "Éxito",
+                    JOptionPane.INFORMATION_MESSAGE);
+        });
+
+        panelNumeroTexto.add(agregarNumeroTextoButton);
+
+        JPanel panelArchivo = new JPanel();
+        panelArchivo.setLayout(new FlowLayout());
+        add(panelArchivo);
+
+
+        rutaField = new JTextField(10);
+        panelArchivo.add(new JLabel("Nombre:"));
+        panelArchivo.add(nombreField);
+        panelArchivo.add(new JLabel("Ruta:"));
+        panelArchivo.add(rutaField);
+
+        JButton agregarArchivoButton = new JButton("Agregar Archivo");
+
+        agregarArchivoButton.addActionListener(e -> {
+            String nombre = nombreField.getText();
+            String ruta = rutaField.getText();
+            archivosIndexados.add(new Archivos(nombre, ruta));
+            nombreField.setText("");
+            rutaField.setText("");
+            JOptionPane.showMessageDialog(this,
+                    "Archivo agregado correctamente.",
+                    "Éxito",
+                    JOptionPane.INFORMATION_MESSAGE);
+        });
+
+        panelArchivo.add(agregarArchivoButton);
+
+
+
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
