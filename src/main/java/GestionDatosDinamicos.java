@@ -184,7 +184,6 @@ public class GestionDatosDinamicos extends JFrame {
         JOptionPane.showMessageDialog(this, "Archivo agregado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
     }
 
-
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new GestionDatosDinamicos()::createAndShowGUI);
     }
