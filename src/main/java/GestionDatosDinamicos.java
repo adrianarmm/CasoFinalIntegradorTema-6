@@ -13,199 +13,150 @@ public class GestionDatosDinamicos extends JFrame {
     private void createAndShowGUI() {
         setTitle("Gestión de Datos Dinámicos");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setLayout(new BoxLayout(getContentPane(), BoxLayout.X_AXIS));
+        setLayout(new FlowLayout());
 
-        addVentaPanel();
-        addNombrePanel();
-        addNumeroLetraPanel();
-        addNumeroTextoPanel();
-        addArchivoPanel();
+        JButton btnVenta = new JButton("Añadir Venta");
+        JButton btnNombre = new JButton("Añadir Nombre");
+        JButton btnNumeroLetra = new JButton("Añadir Número y Letra");
+        JButton btnNumeroTexto = new JButton("Añadir Número y Texto");
+        JButton btnArchivo = new JButton("Añadir Archivo");
+
+        btnVenta.addActionListener(e -> openVentaDialog());
+        btnNombre.addActionListener(e -> openNombreDialog());
+        btnNumeroLetra.addActionListener(e -> openNumeroLetraDialog());
+        btnNumeroTexto.addActionListener(e -> openNumeroTextoDialog());
+        btnArchivo.addActionListener(e -> openArchivoDialog());
+
+        add(btnVenta);
+        add(btnNombre);
+        add(btnNumeroLetra);
+        add(btnNumeroTexto);
+        add(btnArchivo);
 
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
     }
 
-    private JButton createCustomButton(String text, Color bgColor, Color fgColor) {
-        JButton button = new JButton(text);
-        button.setBackground(bgColor);
-        button.setForeground(fgColor);
-        button.setFocusPainted(false);
-        button.setFont(new Font("Arial", Font.BOLD, 12));
-        button.setBorder(BorderFactory.createRaisedBevelBorder());
-        button.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                button.setBackground(bgColor.brighter());
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                button.setBackground(bgColor);
-            }
-        });
-        return button;
-    }
-
-    private void addVentaPanel() {
-        JPanel panelVenta = new JPanel(new GridBagLayout());
-        panelVenta.setBorder(BorderFactory.createTitledBorder("Agregar Venta"));
-
+    private void openVentaDialog() {
+        JDialog dialog = new JDialog(this, "Añadir Venta", true);
+        dialog.setLayout(new FlowLayout());
         productoField = new JTextField(10);
         cantidadField = new JTextField(10);
+        dialog.add(new JLabel("Producto:"));
+        dialog.add(productoField);
+        dialog.add(new JLabel("Cantidad:"));
+        dialog.add(cantidadField);
+        JButton submit = new JButton("Submit");
+        submit.addActionListener(e -> {
+            try {
+                String producto = productoField.getText();
+                int cantidad = Integer.parseInt(cantidadField.getText());
 
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = GridBagConstraints.RELATIVE;
-        gbc.anchor = GridBagConstraints.WEST;
-        gbc.insets = new Insets(5, 5, 5, 5);
+                // Aquí agregarías la venta a tu set o base de datos
 
-        panelVenta.add(new JLabel("Producto:"), gbc);
-        panelVenta.add(productoField, gbc);
-        panelVenta.add(new JLabel("Cantidad:"), gbc);
-        panelVenta.add(cantidadField, gbc);
-
-        JButton agregarVentaButton = createCustomButton("Agregar Venta", Color.BLUE, Color.WHITE);
-        agregarVentaButton.addActionListener(e -> handleVentaAction());
-        panelVenta.add(agregarVentaButton, gbc);
-
-        add(panelVenta);
+                JOptionPane.showMessageDialog(dialog, "Venta agregada correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                dialog.dispose();
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(dialog, "Por favor, ingrese una cantidad válida.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+        dialog.add(submit);
+        dialog.pack();
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
     }
 
-    private void handleVentaAction() {
-        try {
-            String producto = productoField.getText();
-            int cantidad = Integer.parseInt(cantidadField.getText());
-            JOptionPane.showMessageDialog(this, "Venta agregada correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-            productoField.setText("");
-            cantidadField.setText("");
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Por favor, ingrese una cantidad válida.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    private void addNombrePanel() {
-        JPanel panelNombre = new JPanel(new GridBagLayout());
-        panelNombre.setBorder(BorderFactory.createTitledBorder("Nombre"));
-
-        nombreField = new JTextField(10);
-
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = GridBagConstraints.RELATIVE;
-        gbc.anchor = GridBagConstraints.WEST;
-        gbc.insets = new Insets(5, 5, 5, 5);
-
-        panelNombre.add(new JLabel("Nombre:"), gbc);
-        panelNombre.add(nombreField, gbc);
-
-        JButton mostrarNombreButton = createCustomButton("Mostrar Nombre", Color.GREEN, Color.WHITE);
-        mostrarNombreButton.addActionListener(e -> handleNombreAction());
-        panelNombre.add(mostrarNombreButton, gbc);
-
-        add(panelNombre);
-    }
-
-    private void handleNombreAction() {
-        String nombre = nombreField.getText();
-        JOptionPane.showMessageDialog(this, "Nombre: " + nombre, "Nombre", JOptionPane.INFORMATION_MESSAGE);
-    }
-
-    private void addNumeroLetraPanel() {
-        JPanel panelNumeroLetra = new JPanel(new GridBagLayout());
-        panelNumeroLetra.setBorder(BorderFactory.createTitledBorder("Número y Letra"));
-
+    private void openNumeroLetraDialog() {
+        JDialog dialog = new JDialog(this, "Añadir Número y Letra", true);
+        dialog.setLayout(new FlowLayout());
         numeroField = new JTextField(10);
         letraField = new JTextField(10);
-
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = GridBagConstraints.RELATIVE;
-        gbc.anchor = GridBagConstraints.WEST;
-        gbc.insets = new Insets(5, 5, 5, 5);
-
-        panelNumeroLetra.add(new JLabel("Número:"), gbc);
-        panelNumeroLetra.add(numeroField, gbc);
-        panelNumeroLetra.add(new JLabel("Letra:"), gbc);
-        panelNumeroLetra.add(letraField, gbc);
-
-        JButton mostrarNumeroLetraButton = createCustomButton("Mostrar Número y Letra", Color.ORANGE, Color.WHITE);
-        mostrarNumeroLetraButton.addActionListener(e -> handleNumeroLetraAction());
-        panelNumeroLetra.add(mostrarNumeroLetraButton, gbc);
-
-        add(panelNumeroLetra);
+        dialog.add(new JLabel("Número:"));
+        dialog.add(numeroField);
+        dialog.add(new JLabel("Letra:"));
+        dialog.add(letraField);
+        JButton submit = new JButton("Submit");
+        submit.addActionListener(e -> {
+            try {
+                int numero = Integer.parseInt(numeroField.getText());
+                char letra = letraField.getText().charAt(0);
+                // Aquí agregarías el número y letra a tu set o base de datos
+                JOptionPane.showMessageDialog(dialog, "Número y letra agregados correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                dialog.dispose();
+            } catch (NumberFormatException | IndexOutOfBoundsException ex) {
+                JOptionPane.showMessageDialog(dialog, "Por favor, ingrese un número y letra válidos.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+        dialog.add(submit);
+        dialog.pack();
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
     }
 
-    private void handleNumeroLetraAction() {
-        try {
-            int numero = Integer.parseInt(numeroField.getText());
-            char letra = letraField.getText().charAt(0);
-            JOptionPane.showMessageDialog(this, "Número: " + numero + ", Letra: " + letra, "Número y Letra", JOptionPane.INFORMATION_MESSAGE);
-        } catch (NumberFormatException | StringIndexOutOfBoundsException ex) {
-            JOptionPane.showMessageDialog(this, "Por favor, ingrese un número y una letra válidos.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    private void addNumeroTextoPanel() {
-        JPanel panelNumeroTexto = new JPanel(new GridBagLayout());
-        panelNumeroTexto.setBorder(BorderFactory.createTitledBorder("Número y Texto"));
-
+    private void openNumeroTextoDialog() {
+        JDialog dialog = new JDialog(this, "Añadir Número y Texto", true);
+        dialog.setLayout(new FlowLayout());
         numeroTextoField = new JTextField(10);
         textoField = new JTextField(10);
-
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = GridBagConstraints.RELATIVE;
-        gbc.anchor = GridBagConstraints.WEST;
-        gbc.insets = new Insets(5, 5, 5, 5);
-
-        panelNumeroTexto.add(new JLabel("Número:"), gbc);
-        panelNumeroTexto.add(numeroTextoField, gbc);
-        panelNumeroTexto.add(new JLabel("Texto:"), gbc);
-        panelNumeroTexto.add(textoField, gbc);
-
-        JButton mostrarNumeroTextoButton = createCustomButton("Mostrar Número y Texto", Color.RED, Color.WHITE);
-        mostrarNumeroTextoButton.addActionListener(e -> handleNumeroTextoAction());
-        panelNumeroTexto.add(mostrarNumeroTextoButton, gbc);
-
-        add(panelNumeroTexto);
+        dialog.add(new JLabel("Número:"));
+        dialog.add(numeroTextoField);
+        dialog.add(new JLabel("Texto:"));
+        dialog.add(textoField);
+        JButton submit = new JButton("Submit");
+        submit.addActionListener(e -> {
+            try {
+                int numero = Integer.parseInt(numeroTextoField.getText());
+                String texto = textoField.getText();
+                // Aquí agregarías el número y texto a tu set o base de datos
+                JOptionPane.showMessageDialog(dialog, "Número y texto agregados correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                dialog.dispose();
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(dialog, "Por favor, ingrese un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+        dialog.add(submit);
+        dialog.pack();
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
     }
 
-    private void handleNumeroTextoAction() {
-        try {
-            int numero = Integer.parseInt(numeroTextoField.getText());
-            String texto = textoField.getText();
-            JOptionPane.showMessageDialog(this, "Número: " + numero + ", Texto: " + texto, "Número y Texto", JOptionPane.INFORMATION_MESSAGE);
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Por favor, ingrese un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    private void addArchivoPanel() {
-        JPanel panelArchivo = new JPanel(new GridBagLayout());
-        panelArchivo.setBorder(BorderFactory.createTitledBorder("Archivo"));
-
+    private void openArchivoDialog() {
+        JDialog dialog = new JDialog(this, "Añadir Archivo", true);
+        dialog.setLayout(new FlowLayout());
         rutaField = new JTextField(10);
-
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = GridBagConstraints.RELATIVE;
-        gbc.anchor = GridBagConstraints.WEST;
-        gbc.insets = new Insets(5, 5, 5, 5);
-
-        panelArchivo.add(new JLabel("Ruta:"), gbc);
-        panelArchivo.add(rutaField, gbc);
-
-        JButton abrirArchivoButton = createCustomButton("Abrir Archivo", Color.CYAN, Color.WHITE);
-        abrirArchivoButton.addActionListener(e -> handleArchivoAction());
-        panelArchivo.add(abrirArchivoButton, gbc);
-
-        add(panelArchivo);
+        dialog.add(new JLabel("Ruta:"));
+        dialog.add(rutaField);
+        JButton submit = new JButton("Submit");
+        submit.addActionListener(e -> {
+            String ruta = rutaField.getText();
+            // Aquí agregarías la ruta a tu set o base de datos
+            JOptionPane.showMessageDialog(dialog, "Archivo agregado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            dialog.dispose();
+        });
+        dialog.add(submit);
+        dialog.pack();
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
     }
 
-    private void handleArchivoAction() {
-        String ruta = rutaField.getText();
-        JOptionPane.showMessageDialog(this, "Archivo abierto: " + ruta, "Archivo", JOptionPane.INFORMATION_MESSAGE);
+    private void openNombreDialog() {
+        JDialog dialog = new JDialog(this, "Añadir Nombre", true);
+        dialog.setLayout(new FlowLayout());
+        nombreField = new JTextField(10);
+        dialog.add(new JLabel("Nombre:"));
+        dialog.add(nombreField);
+        JButton submit = new JButton("Submit");
+        submit.addActionListener(e -> {
+            String nombre = nombreField.getText();
+            // Aquí agregarías el nombre a tu set o base de datos
+            JOptionPane.showMessageDialog(dialog, "Nombre agregado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            dialog.dispose();
+        });
+        dialog.add(submit);
+        dialog.pack();
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
     }
 
 
