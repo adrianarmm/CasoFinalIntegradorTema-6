@@ -13,18 +13,18 @@ public class IndexadorArchivos {
         File directorio = new File(rutaDirectorio);
         File[] archivosEnDirectorio = directorio.listFiles();
         if (archivosEnDirectorio != null) {
-            for (File Archivo : archivosEnDirectorio) {
-                if (Archivo.isFile()) {
-                    archivos.add(new Archivo(Archivo.getName(), Archivo.getAbsolutePath()));
-                } else if (Archivo.isDirectory()) {
-                    indexarDirectorio(Archivo.getAbsolutePath());
+            for (File Archivos : archivosEnDirectorio) {
+                if (Archivos.isFile()) {
+                    archivos.add(new Archivos(Archivos.getName(), Archivos.getAbsolutePath()));
+                } else if (Archivos.isDirectory()) {
+                    indexarDirectorio(Archivos.getAbsolutePath());
                 }
             }
         }
     }
 
     public void mostrarArchivosOrdenados() {
-        archivos.sort((a1, a2) -> a1.getNombre().compareTo(a2.getNombre()));
+        archivos.sort((a1, a2) -> a1.getClass().componentType().getModifiers());
         archivos.forEach(System.out::println);
     }
 
