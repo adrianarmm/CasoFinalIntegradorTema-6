@@ -1,10 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 class Venta {
     private final String producto;
@@ -29,12 +26,11 @@ class Venta {
     }
 }
 
-class archivo implements Comparable<archivo> {
+class Archivo implements Comparable<Archivo> {
     private final String nombre;
     private final String ruta;
 
-    public archivo(String nombre, String ruta) {
-        super();
+    public Archivo(String nombre, String ruta) {
         this.nombre = nombre;
         this.ruta = ruta;
     }
@@ -45,7 +41,7 @@ class archivo implements Comparable<archivo> {
     }
 
     @Override
-    public int compareTo(archivo otroArchivo) {
+    public int compareTo(Archivo otroArchivo) {
         return this.nombre.compareTo(otroArchivo.nombre);
     }
 
@@ -55,18 +51,13 @@ class archivo implements Comparable<archivo> {
 }
 
 public class GestionDatosDinamicosSwing extends JFrame {
-
     private static List<Venta> ventas = new ArrayList<>();
     private static Set<String> nombres = new TreeSet<>();
     private static Map<Integer, Character> numerosLetras = new HashMap<>();
     private static Map<Integer, String> numerosTexto = new HashMap<>();
-    private static List<archivo> archivosIndexados = new ArrayList<>();
+    private static List<Archivo> archivosIndexados = new ArrayList<>();
 
-    private JTextField productoField;
-    private JTextField cantidadField;
-    private JTextField minCantidadField;
-    private JTextField nombreField;
-    private JTextField rutaField;
+    private JTextField productoField, cantidadField, nombreField, rutaField;
 
     public GestionDatosDinamicosSwing() {
         createAndShowGUI();
@@ -77,37 +68,41 @@ public class GestionDatosDinamicosSwing extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new GridLayout(0, 1));
 
-        JPanel panel1 = new JPanel();
-        panel1.setLayout(new FlowLayout());
-        add(panel1);
+        JPanel panelVenta = new JPanel();
+        panelVenta.setLayout(new FlowLayout());
+        add(panelVenta);
+
+        productoField = new JTextField(10);
+        cantidadField = new JTextField(10);
+        panelVenta.add(new JLabel("Producto:"));
+        panelVenta.add(productoField);
+        panelVenta.add(new JLabel("Cantidad:"));
+        panelVenta.add(cantidadField);
 
         JButton agregarVentaButton = new JButton("Agregar Venta");
-        agregarVentaButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String producto = productoField.getText();
-                int cantidad;
-                try {
-                    cantidad = Integer.parseInt(cantidadField.getText());
-                } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(GestionDatosDinamicosSwing.this,
-                            "Por favor, ingrese una cantidad válida.",
-                            "Error",
-                            JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                ventas.add(new Venta(producto, cantidad));
-                productoField.setText("");
-                cantidadField.setText("");
-                JOptionPane.showMessageDialog(GestionDatosDinamicosSwing.this,
-                        "Venta agregada correctamente.",
-                        "Éxito",
-                        JOptionPane.INFORMATION_MESSAGE);
+        agregarVentaButton.addActionListener(e -> {
+            String producto = productoField.getText();
+            int cantidad;
+            try {
+                cantidad = Integer.parseInt(cantidadField.getText());
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this,
+                        "Por favor, ingrese una cantidad válida.",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
             }
+            ventas.add(new Venta(producto, cantidad));
+            productoField.setText("");
+            cantidadField.setText("");
+            JOptionPane.showMessageDialog(this,
+                    "Venta agregada correctamente.",
+                    "Éxito",
+                    JOptionPane.INFORMATION_MESSAGE);
         });
-        panel1.add(agregarVentaButton);
+        panelVenta.add(agregarVentaButton);
 
-        // Agregar el resto de los botones y campos de texto siguiendo el mismo patrón
+        // Agrega más paneles y botones para otras funcionalidades como modificar y eliminar ventas, manejar nombres y archivos.
 
         pack();
         setLocationRelativeTo(null);
@@ -115,6 +110,6 @@ public class GestionDatosDinamicosSwing extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(GestionDatosDinamicosSwing::new);
+        SwingUtilities.invokeLater(new GestionDatosDinamicosSwing()::createAndShowGUI);
     }
 }
