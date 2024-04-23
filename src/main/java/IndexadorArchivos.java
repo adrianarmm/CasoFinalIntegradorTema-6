@@ -22,10 +22,8 @@ public class IndexadorArchivos {
     }
 
     public void mostrarArchivosOrdenados() {
-        Collections.sort(archivos);
-        for (archivo archivo : archivos) {
-            System.out.println(archivo);
-        }
+        archivos.sort((a1, a2) -> a1.getNombre().compareTo(a2.getNombre()));
+        archivos.forEach(System.out::println);
     }
 
     public static void main(String[] args) {
