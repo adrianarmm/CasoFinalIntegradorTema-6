@@ -8,7 +8,7 @@ public class GestionDatosDinamicos extends JFrame {
     private Set<String> nombres = new TreeSet<>();
     private Map<Integer, Character> numerosLetras = new HashMap<>();
     private Map<Integer, String> numerosTexto = new HashMap<>();
-    private List archivosIndexados = new ArrayList<>();
+    private List archivosIndexados = new List();
 
     private JTextField productoField, cantidadField, nombreField, rutaField, numeroField, letraField, numeroTextoField, textoField;
 
