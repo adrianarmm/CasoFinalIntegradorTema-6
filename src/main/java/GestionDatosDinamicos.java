@@ -55,7 +55,7 @@ public class GestionDatosDinamicos extends JFrame {
         try {
             String producto = productoField.getText();
             int cantidad = Integer.parseInt(cantidadField.getText());
-            ventas.add(new Venta(producto, cantidad));
+            ventas.add(new Ventas(producto, cantidad));
             productoField.setText("");
             cantidadField.setText("");
             JOptionPane.showMessageDialog(this, "Venta agregada correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
@@ -173,7 +173,7 @@ public class GestionDatosDinamicos extends JFrame {
     private void handleArchivoAction() {
         String nombre = nombreField.getText();
         String ruta = rutaField.getText();
-        archivosIndexados.add(new Archivo(nombre, ruta));
+        archivosIndexados.add(new Archivos(nombre, ruta));
         nombreField.setText("");
         rutaField.setText("");
         JOptionPane.showMessageDialog(this, "Archivo agregado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
