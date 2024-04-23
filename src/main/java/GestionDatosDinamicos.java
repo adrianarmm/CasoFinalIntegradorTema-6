@@ -59,7 +59,7 @@ public class GestionDatosDinamicos extends JFrame {
 
     private JTextField productoField, cantidadField, nombreField, rutaField;
 
-    public GestionDatosDinamicosSwing() {
+    public GestionDatosDinamicos() {
         createAndShowGUI();
     }
 
@@ -110,6 +110,6 @@ public class GestionDatosDinamicos extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new GestionDatosDinamicosSwing()::createAndShowGUI);
+        SwingUtilities.invokeLater(new GestionDatosDinamicos()::createAndShowGUI);
     }
 }
